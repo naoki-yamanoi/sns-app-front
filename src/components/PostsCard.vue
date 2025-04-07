@@ -1,14 +1,29 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 
-const followPosts = ref<object[]>([]);
+const followPosts = ref<object[]>([
+  {
+    id: 1,
+    userName: "ユーザー1",
+    userImage: "public/44631706_p0_master1200.jpg",
+    content: "投稿１投稿１投稿１投稿１投稿１投稿１",
+    createdAt: "2025/04/02 12:30:20",
+  },
+  {
+    id: 2,
+    userName: "ユーザー2",
+    userImage: "public/55e25798c9c8e6b02e5d01ec21e03065_t.jpeg",
+    content: "投稿2投稿2投稿2投稿2投稿2投稿2投稿2",
+    createdAt: "2025/04/02 10:20:10",
+  },
+]);
 const myPosts = ref([]);
 
-onMounted(async () => {
-  const response = await fetch("src/api/mock/posts.json");
-  console.log(response.json())
-  followPosts.value = response.json();
-});
+// onMounted(async () => {
+//   const response = await fetch("src/api/mock/posts.json");
+//   console.log(response.json());
+//   followPosts.value = response.json();
+// });
 </script>
 
 <template>
