@@ -1,6 +1,10 @@
 import "@/assets/main.css";
 import "@/assets/styles.scss";
 
+import * as bootstrap from "bootstrap";
+// エラー回避
+console.log(bootstrap);
+
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 
