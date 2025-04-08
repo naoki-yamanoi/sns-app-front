@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+function doPost() {
+  console.log("doPostします");
+}
+</script>
 
 <template>
   <div
@@ -11,7 +15,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">投稿モーダル</h1>
           <button
             type="button"
             class="btn-close"
@@ -19,12 +23,14 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body">...</div>
+        <div class="modal-body">
+          あああああいいいいいいいいいうううううううえええええええおおおおお
+        </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-            Close
+            閉じる
           </button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-primary" @click="doPost">投稿する</button>
         </div>
       </div>
     </div>
