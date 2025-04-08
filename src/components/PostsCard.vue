@@ -72,12 +72,7 @@ const followPosts = ref([
       </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-      <div
-        class="tab-pane fade"
-        id="home"
-        role="tabpanel"
-        aria-labelledby="home-tab"
-      >
+      <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
         <p>あああ</p>
       </div>
       <div

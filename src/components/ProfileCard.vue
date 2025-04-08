@@ -13,11 +13,7 @@ function showDoPostModal() {
     <div>
       <h2>プロフィール</h2>
       <div class="top_container">
-        <img
-          class="profile_user_image"
-          src="/public/44631706_p0_master1200.jpg"
-          alt=""
-        />
+        <img class="profile_user_image" src="/public/44631706_p0_master1200.jpg" alt="" />
         <p class="profile_user_name">ユーザー１</p>
         <p>
           自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介
