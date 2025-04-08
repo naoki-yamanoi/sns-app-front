@@ -2,7 +2,7 @@
 import * as bootstrap from "bootstrap";
 import DoPostModal from "./DoPostModal.vue";
 
-function doPost() {
+function showDoPostModal() {
   // 投稿モーダル表示
   new bootstrap.Modal("#doPostModal").show();
 }
@@ -22,12 +22,15 @@ function doPost() {
         <p>
           自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介
         </p>
+        <router-link to="/profile/edit" class="btn btn-info edit_profile_btn">
+          編集
+        </router-link>
         <button
           type="button"
           class="btn btn-primary post_btn"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
-          @click="doPost"
+          @click="showDoPostModal"
         >
           投稿する
         </button>
@@ -69,6 +72,12 @@ function doPost() {
 .profile_user_name {
   margin-top: 20px;
   font-size: 1.5rem;
+}
+
+.edit_profile_btn {
+  width: 80%;
+  padding: 4px 0;
+  margin-bottom: 20px;
 }
 
 .post_btn {
