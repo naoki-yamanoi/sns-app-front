@@ -15,3 +15,13 @@ npm install
 ```
 npm run dev
 ```
+
+## コマンド
+・静的解析（ESLint）※チェックのみ
+```
+npm run lint
+```
+・フォーマット修正（Prettier）※チェックのみ
+```
+npm run format
+```
