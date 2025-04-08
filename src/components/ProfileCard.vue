@@ -6,6 +6,10 @@ function showDoPostModal() {
   // 投稿モーダル表示
   new bootstrap.Modal("#doPostModal").show();
 }
+
+function logout() {
+  console.log("確認モーダル表示。ログアウトします");
+}
 </script>
 
 <template>
@@ -36,7 +40,7 @@ function showDoPostModal() {
       </div>
     </div>
     <div>
-      <button class="btn btn-danger">ログアウト</button>
+      <button class="btn btn-danger" @click="logout">ログアウト</button>
     </div>
   </div>
 
