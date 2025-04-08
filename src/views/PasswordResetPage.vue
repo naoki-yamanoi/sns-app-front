@@ -3,7 +3,7 @@
 <template>
   <div class="container box_container">
     <div class="proflie_edit_container">
-      <h3 class="profile_edit_title">ログイン</h3>
+      <h3 class="profile_edit_title">パスワードリセット</h3>
       <div class="profile_edit_item">
         <label for="exampleFormControlInput1" class="form-label">メールアドレス</label>
         <input
@@ -22,10 +22,21 @@
           aria-labelledby="passwordHelpBlock"
         />
       </div>
+      <div class="profile_edit_item">
+        <label for="inputPassword5" class="form-label">パスワード確認</label>
+        <input
+          type="password"
+          id="inputPassword5"
+          class="form-control"
+          aria-labelledby="passwordHelpBlock"
+        />
+      </div>
       <div class="btn_container">
-        <button type="button" class="btn btn-primary login_page_btn">ログイン</button>
-        <router-link to="/password/reset" class="btn btn-info login_page_btn">
+        <button type="button" class="btn btn-primary password_reset_page_btn">
           パスワードリセット
+        </button>
+        <router-link to="/login" class="btn btn-info password_reset_page_btn">
+          ログインに戻る
         </router-link>
       </div>
     </div>
@@ -59,7 +70,7 @@
   margin-top: 30px;
 }
 
-.login_page_btn {
+.password_reset_page_btn {
   width: 35%;
   margin-bottom: 20px;
 }

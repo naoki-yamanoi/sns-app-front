@@ -3,6 +3,7 @@ import IndexPage from "@/views/IndexPage.vue";
 import LoginPage from "@/views/LoginPage.vue";
 import ProfileEditPage from "@/views/ProfileEditPage.vue";
 import AccountEditPage from "@/views/AccountEditPage.vue";
+import PasswordResetPage from "@/views/PasswordResetPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,6 +17,11 @@ const router = createRouter({
       path: "/login",
       name: "login",
       component: LoginPage,
+    },
+    {
+      path: "/password/reset",
+      name: "passwordReset",
+      component: PasswordResetPage,
     },
     {
       path: "/profile/edit",
