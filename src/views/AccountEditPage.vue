@@ -3,18 +3,23 @@
 <template>
   <div class="container box_container">
     <div class="proflie_edit_container">
-      <h3 class="profile_edit_title">プロフィール編集</h3>
+      <h3 class="profile_edit_title">アカウント設定</h3>
       <div class="profile_edit_item">
-        <label for="formFile" class="form-label">プロフィール画像</label>
-        <input class="form-control" type="file" id="formFile" />
-      </div>
-      <div class="profile_edit_item">
-        <label for="exampleFormControlInput1" class="form-label">ユーザーネーム</label>
+        <label for="exampleFormControlInput1" class="form-label">メールアドレス</label>
         <input
-          type="text"
+          type="email"
           class="form-control"
           id="exampleFormControlInput1"
-          placeholder="user name"
+          placeholder="test@example.com"
+        />
+      </div>
+      <div class="profile_edit_item">
+        <label for="inputPassword5" class="form-label">パスワード</label>
+        <input
+          type="password"
+          id="inputPassword5"
+          class="form-control"
+          aria-labelledby="passwordHelpBlock"
         />
       </div>
       <div class="btn_container">
