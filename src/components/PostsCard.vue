@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const followPosts = ref<object[]>([
+const followPosts = ref([
   {
     id: 1,
     userName: "ユーザー1",
@@ -17,7 +17,6 @@ const followPosts = ref<object[]>([
     createdAt: "2025/04/02 10:20:10",
   },
 ]);
-const myPosts = ref([]);
 
 // onMounted(async () => {
 //   const response = await fetch("src/api/mock/posts.json");
@@ -73,13 +72,8 @@ const myPosts = ref([]);
       </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-      <div
-        class="tab-pane fade"
-        id="home"
-        role="tabpanel"
-        aria-labelledby="home-tab"
-      >
-        <p v-for="post in myPosts" :key="post.id">{{ post.content }}</p>
+      <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <p>あああ</p>
       </div>
       <div
         class="tab-pane fade show active"
@@ -106,7 +100,7 @@ const myPosts = ref([]);
         role="tabpanel"
         aria-labelledby="contact-tab"
       >
-        ...
+        <p>いいい</p>
       </div>
     </div>
   </div>
@@ -114,7 +108,7 @@ const myPosts = ref([]);
 
 <style scoped lang="scss">
 .center_container {
-  width: 44%;
+  width: 45%;
   border: 1px solid rgb(225, 224, 224);
   box-shadow: 0px 0px 4px #e6e3e3;
 }

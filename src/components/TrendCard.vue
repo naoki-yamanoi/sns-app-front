@@ -9,7 +9,7 @@
 
 <style scoped lang="scss">
 .right_container {
-  width: 27%;
+  width: 25%;
   border: 1px solid rgb(225, 224, 224);
   box-shadow: 0px 0px 4px #e6e3e3;
 }
