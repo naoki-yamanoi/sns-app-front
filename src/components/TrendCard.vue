@@ -2,8 +2,9 @@
 
 <template>
   <div class="right_container">
-    <h2>トレンド</h2>
-    <p>ううううううううう</p>
+    <h3>検索</h3>
+    <p>キーワード</p>
+    <p>ハッシュタグ</p>
   </div>
 </template>
 
