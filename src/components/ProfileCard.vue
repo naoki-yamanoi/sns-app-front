@@ -11,16 +11,13 @@ function showDoPostModal() {
 <template>
   <div class="left_container">
     <div>
-      <h2>プロフィール</h2>
+      <h2>SNS App</h2>
       <div class="top_container">
         <img class="profile_user_image" src="/public/44631706_p0_master1200.jpg" alt="" />
         <p class="profile_user_name">ユーザー１</p>
         <p>
           自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介
         </p>
-        <router-link to="/profile/edit" class="btn btn-info edit_profile_btn">
-          編集
-        </router-link>
         <button
           type="button"
           class="btn btn-primary post_btn"
@@ -30,6 +27,12 @@ function showDoPostModal() {
         >
           投稿する
         </button>
+        <router-link to="/profile/edit" class="btn btn-info edit_profile_btn">
+          プロフィール編集
+        </router-link>
+        <router-link to="/account/edit" class="btn btn-success edit_profile_btn">
+          アカウント設定
+        </router-link>
       </div>
     </div>
     <div>
@@ -60,8 +63,8 @@ function showDoPostModal() {
 }
 
 .profile_user_image {
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
 }
 
@@ -73,11 +76,12 @@ function showDoPostModal() {
 .edit_profile_btn {
   width: 80%;
   padding: 4px 0;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .post_btn {
   width: 80%;
   padding: 12px 0;
+  margin-bottom: 30px;
 }
 </style>
