@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import * as bootstrap from "bootstrap";
-import DoPostModal from "./DoPostModal.vue";
+import DoPostModal from "@/components/DoPostModal.vue";
 
 function showDoPostModal() {
   // 投稿モーダル表示
@@ -17,7 +17,11 @@ function logout() {
     <div>
       <h2>SNS App</h2>
       <div class="top_container">
-        <img class="profile_user_image" src="/public/44631706_p0_master1200.jpg" alt="" />
+        <img
+          class="profile_user_image"
+          src="/src/assets/images/44631706_p0_master1200.jpg"
+          alt=""
+        />
         <p class="profile_user_name">ユーザー１</p>
         <p>
           自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介
