@@ -1,8 +1,8 @@
-export interface Post {
+export interface FollowPost {
   id: number;
+  userName: string;
   content: string;
   userImage: string;
-  userName: string;
   likeFlag: boolean;
-  createdAt: Date;
+  createdAt: string;
 }
