@@ -3,7 +3,7 @@
     "id": 1,
     "userName": "ユーザー1",
     "content": "投稿１投稿１投稿１投稿１投稿１投稿１",
-    "userImage": "/src/images/44631706_p0_master1200.jpg",
+    "userImage": "/src/assets/images/44631706_p0_master1200.jpg",
     "likeFlag": false,
     "createdAt": "2025/04/02 12:30:20"
   },
@@ -11,7 +11,7 @@
     "id": 2,
     "userName": "ユーザー2",
     "content": "投稿2投稿2投稿2投稿2投稿2投稿2投稿2",
-    "userImage": "/src/images/55e25798c9c8e6b02e5d01ec21e03065_t.jpeg",
+    "userImage": "/src/assets/images/55e25798c9c8e6b02e5d01ec21e03065_t.jpeg",
     "likeFlag": true,
     "createdAt": "2025/04/02 10:20:10"
   },
@@ -19,7 +19,7 @@
     "id": 3,
     "userName": "ユーザー３",
     "content": "投稿3投稿3投稿3投稿3投稿3投稿3投稿3投稿3投稿3投稿3投稿3投稿3投稿3投稿3",
-    "userImage": "/src/images/55e25798c9c8e6b02e5d01ec21e03065_t.jpeg",
+    "userImage": "/src/assets/images/55e25798c9c8e6b02e5d01ec21e03065_t.jpeg",
     "likeFlag": false,
     "createdAt": "2025/04/02 10:20:10"
   }
