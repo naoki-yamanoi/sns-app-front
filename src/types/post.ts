@@ -3,6 +3,7 @@ export interface FollowPost {
   userName: string;
   content: string;
   userImage: string;
+  followFlag: boolean;
   likeFlag: boolean;
   createdAt: string;
 }
