@@ -1,0 +1,5 @@
+/* Bootstrap上書き */
+.form-control::placeholder {
+  color: rgb(33 37 41 / 41%);
+  opacity: 1;
+}
