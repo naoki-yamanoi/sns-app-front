@@ -7,6 +7,9 @@ Bootstrap 5
 git clone https://github.com/naoki-yamanoi/sns-app-front.git
 ```
 ```
+.env.localをコピーし、.envを作成
+```
+```
 cd sns-app-front
 ```
 ```

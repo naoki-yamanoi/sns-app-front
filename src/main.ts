@@ -5,7 +5,7 @@ import { createApp } from "vue";
 import { createPinia } from "pinia";
 import App from "@/App.vue";
 import router from "@/router";
-import { worker } from "@/mock/browser";
+// import { worker } from "@/mock/browser";
 
 // エラー回避
 console.log(bootstrap);
@@ -19,9 +19,9 @@ setUp();
 
 async function setUp() {
   // mountより先にworkerを起動させる
-  if (import.meta.env.MODE === "development") {
-    await worker.start();
-  }
+  // if (import.meta.env.MODE === "development") {
+  //   await worker.start();
+  // }
 
   app.mount("#app");
 }
