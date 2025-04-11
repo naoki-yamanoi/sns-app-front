@@ -1,9 +1,50 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import postLogin from "@/api/loginPost";
+import { computed, ref } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const email = ref<string>("");
+const password = ref<string>("");
+const success = ref<string>("");
+const error = ref<string>("");
+
+const successMessage = computed(() => {
+  return success.value;
+});
+
+const errorMessage = computed(() => {
+  return error.value;
+});
+
+// ログイン処理
+async function login() {
+  try {
+    const responseData = await postLogin({
+      email: email.value,
+      password: password.value,
+    });
+    success.value = responseData.message;
+    // ローカルストレージに帰ってきたAPIトークン保存
+    localStorage.setItem("token", responseData.token);
+    router.push("/");
+  } catch (e) {
+    error.value = e.response.data.message;
+  }
+}
+</script>
 
 <template>
   <div class="container box_container">
     <div class="proflie_edit_container">
       <h3 class="profile_edit_title">ログイン</h3>
+      <div v-if="success" class="alert alert-success" role="alert">
+        {{ successMessage }}
+      </div>
+      <div v-if="error" class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+      </div>
       <div class="profile_edit_item">
         <label for="exampleFormControlInput1" class="form-label">メールアドレス</label>
         <input
@@ -11,6 +52,7 @@
           class="form-control"
           id="exampleFormControlInput1"
           placeholder="test@example.com"
+          v-model="email"
         />
       </div>
       <div class="profile_edit_item">
@@ -20,10 +62,13 @@
           id="inputPassword5"
           class="form-control"
           aria-labelledby="passwordHelpBlock"
+          v-model="password"
         />
       </div>
       <div class="btn_container">
-        <button type="button" class="btn btn-primary login_page_btn">ログイン</button>
+        <button type="button" class="btn btn-primary login_page_btn" @click="login">
+          ログイン
+        </button>
         <router-link to="/password/reset" class="btn btn-info login_page_btn">
           パスワードリセット
         </router-link>

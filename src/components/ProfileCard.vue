@@ -1,14 +1,21 @@
 <script setup lang="ts">
 import * as bootstrap from "bootstrap";
 import DoPostModal from "@/components/DoPostModal.vue";
+import postLogout from "@/api/logoutPost";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 function showDoPostModal() {
   // 投稿モーダル表示
   new bootstrap.Modal("#doPostModal").show();
 }
 
-function logout() {
-  console.log("確認モーダル表示。ログアウトします");
+async function logout() {
+  await postLogout();
+  // ローカルストレージのAPIトークン削除
+  localStorage.removeItem("token");
+  router.push("/login");
 }
 </script>
 
