@@ -36,4 +36,15 @@ const router = createRouter({
   ],
 });
 
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem("token");
+
+  // ログイン画面以外に遷移時、APIトークンがなければログイン画面にリダイレクト
+  if (to.name !== "login" && !token) {
+    next({ name: "login" });
+  }
+
+  next();
+});
+
 export default router;
