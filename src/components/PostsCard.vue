@@ -109,5 +109,6 @@ onMounted(async () => {
 
 .nav_item_link {
   width: 100%;
+  padding: 16px 16px;
 }
 </style>
