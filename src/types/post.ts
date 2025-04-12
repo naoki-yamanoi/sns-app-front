@@ -7,3 +7,12 @@ export interface FollowPost {
   likeFlag: boolean;
   createdAt: string;
 }
+
+export interface MyPost {
+  id: number;
+  userName: string;
+  content: string;
+  userImage: string;
+  likeFlag: boolean;
+  createdAt: string;
+}

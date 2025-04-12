@@ -1,13 +1,17 @@
 <script setup lang="ts">
-import postsGet from "@/api/postsGet";
-import type { FollowPost } from "@/types/post";
 import { onMounted, ref } from "vue";
+import type { FollowPost, MyPost } from "@/types/post";
+import postsFollowGet from "@/api/postsFollowGet";
+import postsMineGet from "@/api/postsMineGet";
 import FollowPostItem from "@/components/FollowPostItem.vue";
+import MyPostItem from "@/components/MyPostItem.vue";
 
 const followPosts = ref<FollowPost[]>([]);
+const myPosts = ref<MyPost[]>([]);
 
 onMounted(async () => {
-  followPosts.value = await postsGet();
+  followPosts.value = await postsFollowGet();
+  myPosts.value = await postsMineGet();
 });
 </script>
 
@@ -60,7 +64,9 @@ onMounted(async () => {
     <div class="tab-content" id="myTabContent">
       <!-- my posts -->
       <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <p>あああ</p>
+        <div class="card" v-for="myPost in myPosts" :key="myPost.id">
+          <MyPostItem :my-post="myPost" @toggle-like="myPost.likeFlag = $event" />
+        </div>
       </div>
       <!-- follows -->
       <div

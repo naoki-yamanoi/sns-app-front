@@ -1,6 +1,6 @@
-import apiClient from "./axios";
+import apiClient from "@/api/axios";
 
-async function postsGet() {
+async function postsFollowGet() {
   try {
     const response = await apiClient.get("/posts/follow");
     return response.data;
@@ -9,4 +9,4 @@ async function postsGet() {
   }
 }
 
-export default postsGet;
+export default postsFollowGet;
