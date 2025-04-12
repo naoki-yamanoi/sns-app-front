@@ -18,9 +18,9 @@ onMounted(async () => {
 <template>
   <div class="center_container">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
-      <li class="nav-item" role="presentation">
+      <li class="nav-item nav_item_tab" role="presentation">
         <button
-          class="nav-link"
+          class="nav-link nav_item_link"
           id="home-tab"
           data-bs-toggle="tab"
           data-bs-target="#home"
@@ -32,9 +32,9 @@ onMounted(async () => {
           my posts
         </button>
       </li>
-      <li class="nav-item" role="presentation">
+      <li class="nav-item nav_item_tab" role="presentation">
         <button
-          class="nav-link active"
+          class="nav-link nav_item_link active"
           id="profile-tab"
           data-bs-toggle="tab"
           data-bs-target="#profile"
@@ -46,9 +46,9 @@ onMounted(async () => {
           follows
         </button>
       </li>
-      <li class="nav-item" role="presentation">
+      <li class="nav-item nav_item_tab" role="presentation">
         <button
-          class="nav-link"
+          class="nav-link nav_item_link"
           id="contact-tab"
           data-bs-toggle="tab"
           data-bs-target="#contact"
@@ -101,5 +101,13 @@ onMounted(async () => {
   width: 45%;
   border: 1px solid rgb(225, 224, 224);
   box-shadow: 0px 0px 4px #e6e3e3;
+}
+
+.nav_item_tab {
+  flex-basis: 33.3333%;
+}
+
+.nav_item_link {
+  width: 100%;
 }
 </style>
