@@ -64,7 +64,7 @@ onMounted(async () => {
       <!-- my posts -->
       <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
         <div class="card" v-for="myPost in postStore.myPosts" :key="myPost.id">
-          <MyPostItem :my-post="myPost" @toggle-like="myPost.likeFlag = $event" />
+          <MyPostItem :my-post="myPost" @toggle-like="myPost.likeFlg = $event" />
         </div>
       </div>
       <!-- follows -->
@@ -81,9 +81,9 @@ onMounted(async () => {
         >
           <FollowPostItem
             :follow-post="followPost"
-            @to-follow="followPost.followFlag = $event"
-            @un-follow="followPost.followFlag = $event"
-            @toggle-like="followPost.likeFlag = $event"
+            @to-follow="followPost.followFlg = $event"
+            @un-follow="followPost.followFlg = $event"
+            @toggle-like="followPost.likeFlg = $event"
           />
         </div>
       </div>

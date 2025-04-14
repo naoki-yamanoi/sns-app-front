@@ -9,7 +9,7 @@ const emit = defineEmits(["toggle-like"]);
 
 // いいね切り替え
 function toggleHeartBtn() {
-  emit("toggle-like", !props.myPost.likeFlag);
+  emit("toggle-like", !props.myPost.likeFlg);
 }
 </script>
 
@@ -24,7 +24,7 @@ function toggleHeartBtn() {
         <label
           for="like"
           class="heart_input"
-          :class="{ heart_input_on: myPost.likeFlag }"
+          :class="{ heart_input_on: myPost.likeFlg }"
           @click="toggleHeartBtn"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

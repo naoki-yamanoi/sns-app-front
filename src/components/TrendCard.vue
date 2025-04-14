@@ -2,6 +2,7 @@
 import getRecommendUsers from "@/api/usersReccomendGet";
 import type { RecommendUser } from "@/types/user";
 import { onMounted, ref } from "vue";
+import RecommendUserItem from "@/components/RecommendUserItem.vue";
 
 const recommendUsers = ref<RecommendUser[]>([]);
 
@@ -11,9 +12,6 @@ onMounted(async () => {
 
 function doKeywordSearch() {
   console.log("www");
-}
-function toggleFollowBtn() {
-  console.log("aaa");
 }
 </script>
 
@@ -39,26 +37,11 @@ function toggleFollowBtn() {
     <div class="recommend_group">
       <label class="recommend_group_title">おすすめ</label>
       <div v-for="recommendUser in recommendUsers" :key="recommendUser.id">
-        <div class="card">
-          <div class="card-header card_title_container">
-            <div class="card_user_container">
-              <img :src="recommendUser.image" class="post_user_image" />
-              <p>{{ recommendUser.name }}</p>
-            </div>
-            <div class="card_right_container">
-              <button
-                type="button"
-                class="btn btn-primary follow_btn"
-                @click="toggleFollowBtn"
-              >
-                {{ recommendUser.followFlg ? "フォロー中" : "フォロー" }}
-              </button>
-            </div>
-          </div>
-          <div class="card-body">
-            <p class="card-text">{{ recommendUser.comment }}</p>
-          </div>
-        </div>
+        <RecommendUserItem
+          :recommend-user="recommendUser"
+          @to-follow="recommendUser.followFlg = $event"
+          @un-follow="recommendUser.followFlg = $event"
+        />
       </div>
     </div>
   </div>
@@ -92,42 +75,5 @@ function toggleFollowBtn() {
   .card {
     margin-bottom: 5px;
   }
-}
-
-.post_user_image {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-}
-
-.card_title_container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  p {
-    margin-bottom: 0px;
-    margin-left: 12px;
-  }
-
-  .card_user_container {
-    display: flex;
-    align-items: center;
-  }
-
-  .card_right_container {
-    display: flex;
-    align-items: center;
-  }
-}
-
-.follow_btn {
-  font-size: 13px;
-  padding: 5px 10px;
-  margin-right: 22px;
-}
-
-.none_select {
-  user-select: none;
 }
 </style>

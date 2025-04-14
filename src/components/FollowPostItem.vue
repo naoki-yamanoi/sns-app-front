@@ -6,25 +6,25 @@ import type { FollowPost } from "@/types/post";
 const props = defineProps<{
   followPost: FollowPost;
 }>();
-
 const emit = defineEmits(["to-follow", "un-follow", "toggle-like"]);
 
+// フォローする処理
 async function toFollow() {
   await toFollowPost({
     followed_id: props.followPost.userId,
   });
   emit("to-follow", true);
 }
+// フォロー外す処理
 async function unFollow() {
   await unFollowPost({
     followed_id: props.followPost.userId,
   });
   emit("un-follow", false);
 }
-
 // いいね切り替え
 function toggleHeartBtn() {
-  emit("toggle-like", !props.followPost.likeFlag);
+  emit("toggle-like", !props.followPost.likeFlg);
 }
 </script>
 
@@ -37,7 +37,7 @@ function toggleHeartBtn() {
       </div>
       <div class="card_right_container">
         <button
-          v-if="followPost.followFlag"
+          v-if="followPost.followFlg"
           type="button"
           class="btn btn-primary follow_btn"
           @click="unFollow"
@@ -45,7 +45,7 @@ function toggleHeartBtn() {
           フォロー中
         </button>
         <button
-          v-if="!followPost.followFlag"
+          v-if="!followPost.followFlg"
           type="button"
           class="btn btn-primary follow_btn"
           @click="toFollow"
@@ -55,7 +55,7 @@ function toggleHeartBtn() {
         <label
           for="like"
           class="heart_input"
-          :class="{ heart_input_on: followPost.likeFlag }"
+          :class="{ heart_input_on: followPost.likeFlg }"
           @click="toggleHeartBtn"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

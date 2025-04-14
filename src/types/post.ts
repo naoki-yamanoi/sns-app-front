@@ -4,8 +4,8 @@ export interface FollowPost {
   userName: string;
   content: string;
   userImage: string;
-  followFlag: boolean;
-  likeFlag: boolean;
+  followFlg: boolean;
+  likeFlg: boolean;
   createdAt: string;
 }
 
@@ -15,6 +15,6 @@ export interface MyPost {
   userName: string;
   content: string;
   userImage: string;
-  likeFlag: boolean;
+  likeFlg: boolean;
   createdAt: string;
 }
