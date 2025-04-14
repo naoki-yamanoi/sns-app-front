@@ -1,5 +1,6 @@
 export interface FollowPost {
   id: number;
+  userId: number;
   userName: string;
   content: string;
   userImage: string;
@@ -10,6 +11,7 @@ export interface FollowPost {
 
 export interface MyPost {
   id: number;
+  userId: number;
   userName: string;
   content: string;
   userImage: string;

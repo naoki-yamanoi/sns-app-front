@@ -1,15 +1,25 @@
 <script setup lang="ts">
+import toFollowPost from "@/api/followTo";
+import unFollowPost from "@/api/followUn";
 import type { FollowPost } from "@/types/post";
 
 const props = defineProps<{
   followPost: FollowPost;
 }>();
 
-const emit = defineEmits(["toggle-follow", "toggle-like"]);
+const emit = defineEmits(["to-follow", "un-follow", "toggle-like"]);
 
-// フォロー切り替え
-function toggleFollowBtn() {
-  emit("toggle-follow", !props.followPost.followFlag);
+async function toFollow() {
+  await toFollowPost({
+    followed_id: props.followPost.userId,
+  });
+  emit("to-follow", true);
+}
+async function unFollow() {
+  await unFollowPost({
+    followed_id: props.followPost.userId,
+  });
+  emit("un-follow", false);
 }
 
 // いいね切り替え
@@ -26,8 +36,21 @@ function toggleHeartBtn() {
         <p>{{ followPost.userName }}</p>
       </div>
       <div class="card_right_container">
-        <button type="button" class="btn btn-primary follow_btn" @click="toggleFollowBtn">
-          {{ followPost.followFlag ? "フォロー中" : "フォロー" }}
+        <button
+          v-if="followPost.followFlag"
+          type="button"
+          class="btn btn-primary follow_btn"
+          @click="unFollow"
+        >
+          フォロー中
+        </button>
+        <button
+          v-if="!followPost.followFlag"
+          type="button"
+          class="btn btn-primary follow_btn"
+          @click="toFollow"
+        >
+          フォロー
         </button>
         <label
           for="like"

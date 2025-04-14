@@ -81,7 +81,8 @@ onMounted(async () => {
         >
           <FollowPostItem
             :follow-post="followPost"
-            @toggle-follow="followPost.followFlag = $event"
+            @to-follow="followPost.followFlag = $event"
+            @un-follow="followPost.followFlag = $event"
             @toggle-like="followPost.likeFlag = $event"
           />
         </div>
