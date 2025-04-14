@@ -5,17 +5,18 @@ import unLikePost from "@/api/like/likeUn";
 import toLikePost from "@/api/like/likeTo";
 import unFollowPost from "@/api/follow/followUn";
 import toFollowPost from "@/api/follow/followTo";
-import type { RecommendUser } from "@/types/user";
 import postsFollowGet from "@/api/post/postsFollowGet";
 import postsLikeGet from "@/api/post/postsLikeGet";
 import postsMineGet from "@/api/post/postsMineGet";
 import getRecommendUsers from "@/api/user/usersReccomendGet";
+import { useUserStore } from "@/stores/userStore";
 
 export const usePostStore = defineStore("post", () => {
   const myPosts = ref<MyPost[]>([]);
   const followPosts = ref<FollowPost[]>([]);
   const likePosts = ref<LikePost[]>([]);
-  const recommendUsers = ref<RecommendUser[]>([]);
+
+  const userStore = useUserStore();
 
   async function toggleFollowBtn(followFlg: boolean, userId: number) {
     if (followFlg) {
@@ -30,7 +31,7 @@ export const usePostStore = defineStore("post", () => {
     // 画面データ更新
     followPosts.value = await postsFollowGet();
     likePosts.value = await postsLikeGet();
-    recommendUsers.value = await getRecommendUsers();
+    userStore.recommendUsers = await getRecommendUsers();
   }
 
   async function toggleLikeBtn(likeFlg: boolean, postId: number) {
@@ -53,7 +54,6 @@ export const usePostStore = defineStore("post", () => {
     myPosts,
     followPosts,
     likePosts,
-    recommendUsers,
     toggleFollowBtn,
     toggleLikeBtn,
   };
