@@ -3,8 +3,10 @@ import * as bootstrap from "bootstrap";
 import DoPostModal from "@/components/DoPostModal.vue";
 import postLogout from "@/api/logoutPost";
 import { useRouter } from "vue-router";
+import { useMessageStore } from "@/stores/messageStore";
 
 const router = useRouter();
+const messageStore = useMessageStore();
 
 function showDoPostModal() {
   // 投稿モーダル表示
@@ -42,6 +44,7 @@ async function logout() {
         >
           投稿する
         </button>
+        <p>{{ messageStore.message }}</p>
         <router-link to="/profile/edit" class="btn btn-info edit_profile_btn">
           プロフィール編集
         </router-link>
