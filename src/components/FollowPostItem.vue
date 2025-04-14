@@ -1,41 +1,22 @@
 <script setup lang="ts">
-import toFollowPost from "@/api/follow/followTo";
-import unFollowPost from "@/api/follow/followUn";
-import toLikePost from "@/api/like/likeTo";
-import unLikePost from "@/api/like/likeUn";
+import postsFollowGet from "@/api/post/postsFollowGet";
+import { usePostStore } from "@/stores/postStore";
 import type { FollowPost } from "@/types/post";
 
 const props = defineProps<{
   followPost: FollowPost;
 }>();
-const emit = defineEmits(["to-follow", "un-follow", "toggle-like"]);
+const postStore = usePostStore();
 
-// フォローする処理
-async function toFollow() {
-  await toFollowPost({
-    followed_id: props.followPost.userId,
-  });
-  emit("to-follow", true);
-}
-// フォロー外す処理
-async function unFollow() {
-  await unFollowPost({
-    followed_id: props.followPost.userId,
-  });
-  emit("un-follow", false);
+// フォロー切り替え処理
+async function toggleFollow() {
+  await postStore.toggleFollowBtn(props.followPost.followFlg, props.followPost.userId);
+  postStore.followPosts = await postsFollowGet();
 }
 // いいね切り替え処理
-async function toggleHeartBtn() {
-  if (props.followPost.likeFlg) {
-    await unLikePost({
-      post_id: props.followPost.id,
-    });
-  } else {
-    await toLikePost({
-      post_id: props.followPost.id,
-    });
-  }
-  emit("toggle-like", !props.followPost.likeFlg);
+async function toggleHeart() {
+  await postStore.toggleLikeBtn(props.followPost.likeFlg, props.followPost.id);
+  postStore.followPosts = await postsFollowGet();
 }
 </script>
 
@@ -47,27 +28,14 @@ async function toggleHeartBtn() {
         <p>{{ followPost.userName }}</p>
       </div>
       <div class="card_right_container">
-        <button
-          v-if="followPost.followFlg"
-          type="button"
-          class="btn btn-primary follow_btn"
-          @click="unFollow"
-        >
-          フォロー中
-        </button>
-        <button
-          v-if="!followPost.followFlg"
-          type="button"
-          class="btn btn-primary follow_btn"
-          @click="toFollow"
-        >
-          フォロー
+        <button type="button" class="btn btn-primary follow_btn" @click="toggleFollow">
+          {{ followPost.followFlg ? "フォロー中" : "フォロー" }}
         </button>
         <label
           for="like"
           class="heart_input"
           :class="{ heart_input_on: followPost.likeFlg }"
-          @click="toggleHeartBtn"
+          @click="toggleHeart"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path

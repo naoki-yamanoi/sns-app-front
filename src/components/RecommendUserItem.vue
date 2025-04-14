@@ -1,31 +1,19 @@
 <script setup lang="ts">
-import toFollowPost from "@/api/follow/followTo";
-import unFollowPost from "@/api/follow/followUn";
-import postsFollowGet from "@/api/post/postsFollowGet";
+import getRecommendUsers from "@/api/user/usersReccomendGet";
 import { usePostStore } from "@/stores/postStore";
+import { useUserStore } from "@/stores/userStore";
 import type { RecommendUser } from "@/types/user";
 
 const props = defineProps<{
   recommendUser: RecommendUser;
 }>();
-const emit = defineEmits(["to-follow", "un-follow"]);
 const postStore = usePostStore();
+const userStore = useUserStore();
 
-// フォローする処理
-async function toFollow() {
-  await toFollowPost({
-    followed_id: props.recommendUser.id,
-  });
-  emit("to-follow", true);
-  postStore.followPosts = await postsFollowGet();
-}
-// フォロー外す処理
-async function unFollow() {
-  await unFollowPost({
-    followed_id: props.recommendUser.id,
-  });
-  emit("un-follow", false);
-  postStore.followPosts = await postsFollowGet();
+// フォロー切り替え処理
+async function toggleFollow() {
+  await postStore.toggleFollowBtn(props.recommendUser.followFlg, props.recommendUser.id);
+  userStore.recommendUsers = await getRecommendUsers();
 }
 </script>
 
@@ -37,21 +25,8 @@ async function unFollow() {
         <p>{{ props.recommendUser.name }}</p>
       </div>
       <div class="card_right_container">
-        <button
-          v-if="props.recommendUser.followFlg"
-          type="button"
-          class="btn btn-primary follow_btn"
-          @click="unFollow"
-        >
-          フォロー中
-        </button>
-        <button
-          v-if="!props.recommendUser.followFlg"
-          type="button"
-          class="btn btn-primary follow_btn"
-          @click="toFollow"
-        >
-          フォロー
+        <button type="button" class="btn btn-primary follow_btn" @click="toggleFollow">
+          {{ props.recommendUser.followFlg ? "フォロー中" : "フォロー" }}
         </button>
       </div>
     </div>

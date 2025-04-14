@@ -1,16 +1,22 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import postsFollowGet from "@/api/post/postsFollowGet";
+import postsLikeGet from "@/api/post/postsLikeGet";
 import postsMineGet from "@/api/post/postsMineGet";
 import FollowPostItem from "@/components/FollowPostItem.vue";
+import LikePostItem from "@/components/LikePostItem.vue";
 import MyPostItem from "@/components/MyPostItem.vue";
 import { usePostStore } from "@/stores/postStore";
 
 const postStore = usePostStore();
 
 onMounted(async () => {
-  postStore.followPosts = await postsFollowGet();
+  // my posts取得
   postStore.myPosts = await postsMineGet();
+  // follows取得
+  postStore.followPosts = await postsFollowGet();
+  // favorites取得
+  postStore.likePosts = await postsLikeGet();
 });
 </script>
 
@@ -64,7 +70,7 @@ onMounted(async () => {
       <!-- my posts -->
       <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
         <div class="card" v-for="myPost in postStore.myPosts" :key="myPost.id">
-          <MyPostItem :my-post="myPost" @toggle-like="myPost.likeFlg = $event" />
+          <MyPostItem :my-post="myPost" />
         </div>
       </div>
       <!-- follows -->
@@ -79,12 +85,7 @@ onMounted(async () => {
           v-for="followPost in postStore.followPosts"
           :key="followPost.id"
         >
-          <FollowPostItem
-            :follow-post="followPost"
-            @to-follow="followPost.followFlg = $event"
-            @un-follow="followPost.followFlg = $event"
-            @toggle-like="followPost.likeFlg = $event"
-          />
+          <FollowPostItem :follow-post="followPost" />
         </div>
       </div>
       <!-- favorites -->
@@ -94,7 +95,9 @@ onMounted(async () => {
         role="tabpanel"
         aria-labelledby="contact-tab"
       >
-        <p>いいい</p>
+        <div class="card" v-for="likePost in postStore.likePosts" :key="likePost.id">
+          <LikePostItem :like-post="likePost" />
+        </div>
       </div>
     </div>
   </div>

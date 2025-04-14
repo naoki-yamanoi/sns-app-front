@@ -1,17 +1,22 @@
 <script setup lang="ts">
-import postsMineGet from "@/api/post/postsMineGet";
+import postsLikeGet from "@/api/post/postsLikeGet";
 import { usePostStore } from "@/stores/postStore";
-import type { MyPost } from "@/types/post";
+import type { LikePost } from "@/types/post";
 
 const props = defineProps<{
-  myPost: MyPost;
+  likePost: LikePost;
 }>();
 const postStore = usePostStore();
 
+// フォロー切り替え処理
+async function toggleFollow() {
+  await postStore.toggleFollowBtn(props.likePost.followFlg, props.likePost.userId);
+  postStore.likePosts = await postsLikeGet();
+}
 // いいね切り替え処理
 async function toggleHeart() {
-  await postStore.toggleLikeBtn(props.myPost.likeFlg, props.myPost.id);
-  postStore.myPosts = await postsMineGet();
+  await postStore.toggleLikeBtn(props.likePost.likeFlg, props.likePost.id);
+  postStore.likePosts = await postsLikeGet();
 }
 </script>
 
@@ -19,14 +24,17 @@ async function toggleHeart() {
   <div>
     <div class="card-header card_title_container">
       <div class="card_user_container">
-        <img :src="myPost.userImage" class="post_user_image" />
-        <p>{{ myPost.userName }}</p>
+        <img :src="likePost.userImage" class="post_user_image" />
+        <p>{{ likePost.userName }}</p>
       </div>
       <div class="card_right_container">
+        <button type="button" class="btn btn-primary follow_btn" @click="toggleFollow">
+          {{ props.likePost.followFlg ? "フォロー中" : "フォロー" }}
+        </button>
         <label
           for="like"
           class="heart_input"
-          :class="{ heart_input_on: myPost.likeFlg }"
+          :class="{ heart_input_on: likePost.likeFlg }"
           @click="toggleHeart"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -35,11 +43,11 @@ async function toggleHeart() {
             />
           </svg>
         </label>
-        <p class="none_select">{{ myPost.createdAt }}</p>
+        <p class="none_select">{{ likePost.createdAt }}</p>
       </div>
     </div>
     <div class="card-body">
-      <p class="card-text">{{ myPost.content }}</p>
+      <p class="card-text">{{ likePost.content }}</p>
     </div>
   </div>
 </template>
@@ -70,6 +78,12 @@ async function toggleHeart() {
     display: flex;
     align-items: center;
   }
+}
+
+.follow_btn {
+  font-size: 13px;
+  padding: 5px 10px;
+  margin-right: 22px;
 }
 
 .heart_input {

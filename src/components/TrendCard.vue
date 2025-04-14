@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import getRecommendUsers from "@/api/user/usersReccomendGet";
-import type { RecommendUser } from "@/types/user";
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
 import RecommendUserItem from "@/components/RecommendUserItem.vue";
-
-const recommendUsers = ref<RecommendUser[]>([]);
+import { useUserStore } from "@/stores/userStore";
 
 onMounted(async () => {
-  recommendUsers.value = await getRecommendUsers();
+  // おすすめユーザー取得
+  userStore.recommendUsers = await getRecommendUsers();
 });
+const userStore = useUserStore();
 
 function doKeywordSearch() {
   console.log("www");
@@ -36,12 +36,8 @@ function doKeywordSearch() {
     </div>
     <div class="recommend_group">
       <label class="recommend_group_title">おすすめユーザー</label>
-      <div v-for="recommendUser in recommendUsers" :key="recommendUser.id">
-        <RecommendUserItem
-          :recommend-user="recommendUser"
-          @to-follow="recommendUser.followFlg = $event"
-          @un-follow="recommendUser.followFlg = $event"
-        />
+      <div v-for="recommendUser in userStore.recommendUsers" :key="recommendUser.id">
+        <RecommendUserItem :recommend-user="recommendUser" />
       </div>
     </div>
   </div>

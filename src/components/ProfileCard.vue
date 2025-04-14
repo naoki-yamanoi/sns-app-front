@@ -8,15 +8,18 @@ import { useMessageStore } from "@/stores/messageStore";
 const router = useRouter();
 const messageStore = useMessageStore();
 
+// 投稿モーダル開く
 function showDoPostModal() {
   new bootstrap.Modal("#doPostModal").show();
 }
+// 投稿モーダル閉じる
 function hideDoPostModal() {
   const modal = bootstrap.Modal.getInstance("#doPostModal");
   if (modal) {
     modal.hide();
   }
 }
+// ログアウト実行
 async function logout() {
   await postLogout();
   // ローカルストレージのAPIトークン削除
