@@ -1,18 +1,17 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import getRecommendUsers from "@/api/usersReccomendGet";
+import type { RecommendUser } from "@/types/user";
+import { onMounted, ref } from "vue";
 
-const followPost = ref({
-  id: 1,
-  userName: "ユーザー1",
-  content: "投稿１投稿１投稿１投稿１投稿１投稿１",
-  userImage: "/src/assets/images/44631706_p0_master1200.jpg",
-  followFlg: false,
+const recommendUsers = ref<RecommendUser[]>([]);
+
+onMounted(async () => {
+  recommendUsers.value = await getRecommendUsers();
 });
 
 function doKeywordSearch() {
   console.log("www");
 }
-
 function toggleFollowBtn() {
   console.log("aaa");
 }
@@ -39,12 +38,12 @@ function toggleFollowBtn() {
     </div>
     <div class="recommend_group">
       <label class="recommend_group_title">おすすめ</label>
-      <div>
+      <div v-for="recommendUser in recommendUsers" :key="recommendUser.id">
         <div class="card">
           <div class="card-header card_title_container">
             <div class="card_user_container">
-              <img :src="followPost.userImage" class="post_user_image" />
-              <p>{{ followPost.userName }}</p>
+              <img :src="recommendUser.image" class="post_user_image" />
+              <p>{{ recommendUser.name }}</p>
             </div>
             <div class="card_right_container">
               <button
@@ -52,32 +51,12 @@ function toggleFollowBtn() {
                 class="btn btn-primary follow_btn"
                 @click="toggleFollowBtn"
               >
-                {{ followPost.followFlg ? "フォロー中" : "フォロー" }}
+                {{ recommendUser.followFlg ? "フォロー中" : "フォロー" }}
               </button>
             </div>
           </div>
           <div class="card-body">
-            <p class="card-text">{{ followPost.content }}</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header card_title_container">
-            <div class="card_user_container">
-              <img :src="followPost.userImage" class="post_user_image" />
-              <p>{{ followPost.userName }}</p>
-            </div>
-            <div class="card_right_container">
-              <button
-                type="button"
-                class="btn btn-primary follow_btn"
-                @click="toggleFollowBtn"
-              >
-                {{ followPost.followFlg ? "フォロー中" : "フォロー" }}
-              </button>
-            </div>
-          </div>
-          <div class="card-body">
-            <p class="card-text">{{ followPost.content }}</p>
+            <p class="card-text">{{ recommendUser.comment }}</p>
           </div>
         </div>
       </div>
