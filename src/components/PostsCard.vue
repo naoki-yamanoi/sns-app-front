@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import type { FollowPost, MyPost } from "@/types/post";
+import { onMounted } from "vue";
 import postsFollowGet from "@/api/postsFollowGet";
 import postsMineGet from "@/api/postsMineGet";
 import FollowPostItem from "@/components/FollowPostItem.vue";
 import MyPostItem from "@/components/MyPostItem.vue";
+import { usePostStore } from "@/stores/postStore";
 
-const followPosts = ref<FollowPost[]>([]);
-const myPosts = ref<MyPost[]>([]);
+const postStore = usePostStore();
 
 onMounted(async () => {
-  followPosts.value = await postsFollowGet();
-  myPosts.value = await postsMineGet();
+  postStore.followPosts = await postsFollowGet();
+  postStore.myPosts = await postsMineGet();
 });
 </script>
 
@@ -64,7 +63,7 @@ onMounted(async () => {
     <div class="tab-content" id="myTabContent">
       <!-- my posts -->
       <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <div class="card" v-for="myPost in myPosts" :key="myPost.id">
+        <div class="card" v-for="myPost in postStore.myPosts" :key="myPost.id">
           <MyPostItem :my-post="myPost" @toggle-like="myPost.likeFlag = $event" />
         </div>
       </div>
@@ -75,7 +74,11 @@ onMounted(async () => {
         role="tabpanel"
         aria-labelledby="profile-tab"
       >
-        <div class="card" v-for="followPost in followPosts" :key="followPost.id">
+        <div
+          class="card"
+          v-for="followPost in postStore.followPosts"
+          :key="followPost.id"
+        >
           <FollowPostItem
             :follow-post="followPost"
             @toggle-follow="followPost.followFlag = $event"
