@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import toFollowPost from "@/api/followTo";
 import unFollowPost from "@/api/followUn";
+import postsFollowGet from "@/api/postsFollowGet";
+import { usePostStore } from "@/stores/postStore";
 import type { RecommendUser } from "@/types/user";
 
 const props = defineProps<{
   recommendUser: RecommendUser;
 }>();
 const emit = defineEmits(["to-follow", "un-follow"]);
+const postStore = usePostStore();
 
 // フォローする処理
 async function toFollow() {
@@ -14,6 +17,7 @@ async function toFollow() {
     followed_id: props.recommendUser.id,
   });
   emit("to-follow", true);
+  postStore.followPosts = await postsFollowGet();
 }
 // フォロー外す処理
 async function unFollow() {
@@ -21,6 +25,7 @@ async function unFollow() {
     followed_id: props.recommendUser.id,
   });
   emit("un-follow", false);
+  postStore.followPosts = await postsFollowGet();
 }
 </script>
 

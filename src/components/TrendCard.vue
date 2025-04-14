@@ -35,7 +35,7 @@ function doKeywordSearch() {
       </form>
     </div>
     <div class="recommend_group">
-      <label class="recommend_group_title">おすすめ</label>
+      <label class="recommend_group_title">おすすめユーザー</label>
       <div v-for="recommendUser in recommendUsers" :key="recommendUser.id">
         <RecommendUserItem
           :recommend-user="recommendUser"
