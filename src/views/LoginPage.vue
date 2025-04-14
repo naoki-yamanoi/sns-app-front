@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import postLogin from "@/api/loginPost";
+import postLogin from "@/api/auth/loginPost";
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 

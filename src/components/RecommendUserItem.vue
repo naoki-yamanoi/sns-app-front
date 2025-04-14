@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import toFollowPost from "@/api/followTo";
-import unFollowPost from "@/api/followUn";
-import postsFollowGet from "@/api/postsFollowGet";
+import toFollowPost from "@/api/follow/followTo";
+import unFollowPost from "@/api/follow/followUn";
+import postsFollowGet from "@/api/post/postsFollowGet";
 import { usePostStore } from "@/stores/postStore";
 import type { RecommendUser } from "@/types/user";
 

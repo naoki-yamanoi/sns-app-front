@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import getRecommendUsers from "@/api/usersReccomendGet";
+import getRecommendUsers from "@/api/user/usersReccomendGet";
 import type { RecommendUser } from "@/types/user";
 import { onMounted, ref } from "vue";
 import RecommendUserItem from "@/components/RecommendUserItem.vue";

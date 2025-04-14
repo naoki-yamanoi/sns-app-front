@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import toFollowPost from "@/api/followTo";
-import unFollowPost from "@/api/followUn";
+import toFollowPost from "@/api/follow/followTo";
+import unFollowPost from "@/api/follow/followUn";
 import type { FollowPost } from "@/types/post";
 
 const props = defineProps<{

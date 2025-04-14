@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import createPost from "@/api/postCreate";
-import postsMineGet from "@/api/postsMineGet";
+import createPost from "@/api/post/postCreate";
+import postsMineGet from "@/api/post/postsMineGet";
 import { useMessageStore } from "@/stores/messageStore";
 import { usePostStore } from "@/stores/postStore";
 import { ref } from "vue";

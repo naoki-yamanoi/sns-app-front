@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
-import postsFollowGet from "@/api/postsFollowGet";
-import postsMineGet from "@/api/postsMineGet";
+import postsFollowGet from "@/api/post/postsFollowGet";
+import postsMineGet from "@/api/post/postsMineGet";
 import FollowPostItem from "@/components/FollowPostItem.vue";
 import MyPostItem from "@/components/MyPostItem.vue";
 import { usePostStore } from "@/stores/postStore";

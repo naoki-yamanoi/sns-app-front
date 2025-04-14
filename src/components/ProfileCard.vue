@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import * as bootstrap from "bootstrap";
 import DoPostModal from "@/components/DoPostModal.vue";
-import postLogout from "@/api/logoutPost";
+import postLogout from "@/api/auth/logoutPost";
 import { useRouter } from "vue-router";
 import { useMessageStore } from "@/stores/messageStore";
 
