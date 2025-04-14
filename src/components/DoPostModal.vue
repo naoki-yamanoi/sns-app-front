@@ -7,14 +7,16 @@ import { ref } from "vue";
 
 const postStore = usePostStore();
 const messageStore = useMessageStore();
-
-const postMessage = ref<string>("");
+const emit = defineEmits(["hideModal"]);
+const postContent = ref<string>("");
 
 async function doPost() {
   // 新規投稿作成
   const responseData = await createPost({
-    post: postMessage.value,
+    post: postContent.value,
   });
+  // モーダル閉じる
+  emit("hideModal");
   // レスポンスメッセージ表示
   messageStore.setMessage(responseData.message);
   // 新規投稿追加後のmy posts再取得
@@ -43,7 +45,7 @@ async function doPost() {
         </div>
         <textarea
           class="modal-body post_message_container"
-          v-model="postMessage"
+          v-model="postContent"
         ></textarea>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

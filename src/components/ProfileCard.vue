@@ -9,10 +9,14 @@ const router = useRouter();
 const messageStore = useMessageStore();
 
 function showDoPostModal() {
-  // 投稿モーダル表示
   new bootstrap.Modal("#doPostModal").show();
 }
-
+function hideDoPostModal() {
+  const modal = bootstrap.Modal.getInstance("#doPostModal");
+  if (modal) {
+    modal.hide();
+  }
+}
 async function logout() {
   await postLogout();
   // ローカルストレージのAPIトークン削除
@@ -59,7 +63,7 @@ async function logout() {
   </div>
 
   <!-- Modal -->
-  <DoPostModal />
+  <DoPostModal @hide-modal="hideDoPostModal" />
 </template>
 
 <style scoped lang="scss">
