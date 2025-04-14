@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import toLikePost from "@/api/like/likeTo";
+import unLikePost from "@/api/like/likeUn";
 import type { MyPost } from "@/types/post";
 
 const props = defineProps<{
@@ -7,8 +9,17 @@ const props = defineProps<{
 
 const emit = defineEmits(["toggle-like"]);
 
-// いいね切り替え
-function toggleHeartBtn() {
+// いいね切り替え処理
+async function toggleHeartBtn() {
+  if (props.myPost.likeFlg) {
+    await unLikePost({
+      post_id: props.myPost.id,
+    });
+  } else {
+    await toLikePost({
+      post_id: props.myPost.id,
+    });
+  }
   emit("toggle-like", !props.myPost.likeFlg);
 }
 </script>

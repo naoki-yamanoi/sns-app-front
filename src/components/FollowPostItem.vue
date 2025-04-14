@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import toFollowPost from "@/api/follow/followTo";
 import unFollowPost from "@/api/follow/followUn";
+import toLikePost from "@/api/like/likeTo";
+import unLikePost from "@/api/like/likeUn";
 import type { FollowPost } from "@/types/post";
 
 const props = defineProps<{
@@ -22,8 +24,17 @@ async function unFollow() {
   });
   emit("un-follow", false);
 }
-// いいね切り替え
-function toggleHeartBtn() {
+// いいね切り替え処理
+async function toggleHeartBtn() {
+  if (props.followPost.likeFlg) {
+    await unLikePost({
+      post_id: props.followPost.id,
+    });
+  } else {
+    await toLikePost({
+      post_id: props.followPost.id,
+    });
+  }
   emit("toggle-like", !props.followPost.likeFlg);
 }
 </script>
