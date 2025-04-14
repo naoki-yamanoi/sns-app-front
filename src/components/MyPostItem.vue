@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import postsLikeGet from "@/api/post/postsLikeGet";
-import postsMineGet from "@/api/post/postsMineGet";
 import { usePostStore } from "@/stores/postStore";
 import type { MyPost } from "@/types/post";
 
@@ -12,8 +10,6 @@ const postStore = usePostStore();
 // いいね切り替え処理
 async function toggleHeart() {
   await postStore.toggleLikeBtn(props.myPost.likeFlg, props.myPost.id);
-  postStore.myPosts = await postsMineGet();
-  postStore.likePosts = await postsLikeGet();
 }
 </script>
 

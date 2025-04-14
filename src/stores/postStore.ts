@@ -6,6 +6,10 @@ import toLikePost from "@/api/like/likeTo";
 import unFollowPost from "@/api/follow/followUn";
 import toFollowPost from "@/api/follow/followTo";
 import type { RecommendUser } from "@/types/user";
+import postsFollowGet from "@/api/post/postsFollowGet";
+import postsLikeGet from "@/api/post/postsLikeGet";
+import postsMineGet from "@/api/post/postsMineGet";
+import getRecommendUsers from "@/api/user/usersReccomendGet";
 
 export const usePostStore = defineStore("post", () => {
   const myPosts = ref<MyPost[]>([]);
@@ -23,6 +27,10 @@ export const usePostStore = defineStore("post", () => {
         followed_id: userId,
       });
     }
+    // 画面データ更新
+    followPosts.value = await postsFollowGet();
+    likePosts.value = await postsLikeGet();
+    recommendUsers.value = await getRecommendUsers();
   }
 
   async function toggleLikeBtn(likeFlg: boolean, postId: number) {
@@ -35,6 +43,10 @@ export const usePostStore = defineStore("post", () => {
         post_id: postId,
       });
     }
+    // 画面データ更新
+    followPosts.value = await postsFollowGet();
+    likePosts.value = await postsLikeGet();
+    myPosts.value = await postsMineGet();
   }
 
   return {

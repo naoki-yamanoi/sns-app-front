@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import postsLikeGet from "@/api/post/postsLikeGet";
 import getUserId from "@/api/user/userGet";
 import { usePostStore } from "@/stores/postStore";
 import type { LikePost } from "@/types/post";
@@ -18,12 +17,10 @@ onMounted(async () => {
 // フォロー切り替え処理
 async function toggleFollow() {
   await postStore.toggleFollowBtn(props.likePost.followFlg, props.likePost.userId);
-  postStore.likePosts = await postsLikeGet();
 }
 // いいね切り替え処理
 async function toggleHeart() {
   await postStore.toggleLikeBtn(props.likePost.likeFlg, props.likePost.id);
-  postStore.likePosts = await postsLikeGet();
 }
 </script>
 

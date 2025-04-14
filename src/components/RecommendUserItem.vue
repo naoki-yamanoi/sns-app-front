@@ -1,19 +1,15 @@
 <script setup lang="ts">
-import getRecommendUsers from "@/api/user/usersReccomendGet";
 import { usePostStore } from "@/stores/postStore";
-import { useUserStore } from "@/stores/userStore";
 import type { RecommendUser } from "@/types/user";
 
 const props = defineProps<{
   recommendUser: RecommendUser;
 }>();
 const postStore = usePostStore();
-const userStore = useUserStore();
 
 // フォロー切り替え処理
 async function toggleFollow() {
   await postStore.toggleFollowBtn(props.recommendUser.followFlg, props.recommendUser.id);
-  userStore.recommendUsers = await getRecommendUsers();
 }
 </script>
 
