@@ -1,12 +1,19 @@
 <script setup lang="ts">
 import postsLikeGet from "@/api/post/postsLikeGet";
+import getUserId from "@/api/user/userGet";
 import { usePostStore } from "@/stores/postStore";
 import type { LikePost } from "@/types/post";
+import { onMounted, ref } from "vue";
 
 const props = defineProps<{
   likePost: LikePost;
 }>();
 const postStore = usePostStore();
+const loginUserId = ref();
+
+onMounted(async () => {
+  loginUserId.value = await getUserId();
+});
 
 // フォロー切り替え処理
 async function toggleFollow() {
@@ -28,7 +35,12 @@ async function toggleHeart() {
         <p>{{ likePost.userName }}</p>
       </div>
       <div class="card_right_container">
-        <button type="button" class="btn btn-primary follow_btn" @click="toggleFollow">
+        <button
+          v-if="loginUserId !== likePost.userId"
+          type="button"
+          class="btn btn-primary follow_btn"
+          @click="toggleFollow"
+        >
           {{ props.likePost.followFlg ? "フォロー中" : "フォロー" }}
         </button>
         <label
