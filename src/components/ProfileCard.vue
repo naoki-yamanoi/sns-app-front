@@ -4,9 +4,16 @@ import DoPostModal from "@/components/DoPostModal.vue";
 import postLogout from "@/api/auth/logoutPost";
 import { useRouter } from "vue-router";
 import { useMessageStore } from "@/stores/messageStore";
+import { onMounted } from "vue";
+import { useUserStore } from "@/stores/userStore";
 
 const router = useRouter();
 const messageStore = useMessageStore();
+const userStore = useUserStore();
+
+onMounted(async () => {
+  await userStore.getProfile();
+});
 
 // 投稿モーダル開く
 function showDoPostModal() {
@@ -35,13 +42,11 @@ async function logout() {
       <div class="top_container">
         <img
           class="profile_user_image"
-          src="/src/assets/images/44631706_p0_master1200.jpg"
-          alt=""
+          :src="userStore.imageUrl"
+          alt="プロフィール画像"
         />
-        <p class="profile_user_name">ユーザー１</p>
-        <p>
-          自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介
-        </p>
+        <p class="profile_user_name">{{ userStore.userName }}</p>
+        <p>{{ userStore.userComment }}</p>
         <button
           type="button"
           class="btn btn-primary post_btn"

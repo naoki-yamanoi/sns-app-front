@@ -1,18 +1,13 @@
 <script setup lang="ts">
 import editUserProfile from "@/api/user/userProfileEdit";
-import getUserProfile from "@/api/user/userProfileGet";
+import { useUserStore } from "@/stores/userStore";
 import { onMounted, ref } from "vue";
 
+const userStore = useUserStore();
 const selectedFile = ref<File | null>(null);
-const previewUrl = ref<string>("/src/assets/images/no_image.png");
-const userName = ref<string>("");
-const comment = ref<string>("");
 
 onMounted(async () => {
-  const responseData = await getUserProfile();
-  previewUrl.value = responseData.url;
-  userName.value = responseData.name;
-  comment.value = responseData.comment;
+  await userStore.getProfile();
 });
 
 // ファイル選択処理
@@ -22,24 +17,21 @@ function onFileChange(event: Event) {
   if (file) {
     selectedFile.value = file;
     // ローカルの画像パス生成
-    previewUrl.value = URL.createObjectURL(file);
+    userStore.imageUrl = URL.createObjectURL(file);
   }
 }
 // 編集保存処理
 async function editProfile() {
   const formData = new FormData();
-  formData.append("userName", userName.value);
-  formData.append("comment", comment.value);
+  formData.append("userName", userStore.userName);
+  formData.append("comment", userStore.userComment);
   if (selectedFile.value) {
     formData.append("userImage", selectedFile.value);
   }
   // 編集保存api
   await editUserProfile(formData);
   // プロフィール情報取得api
-  const responseData = await getUserProfile();
-  previewUrl.value = responseData.url;
-  userName.value = responseData.name;
-  comment.value = responseData.comment;
+  await userStore.getProfile();
 }
 </script>
 
@@ -51,7 +43,7 @@ async function editProfile() {
         <label for="formFile" class="form-label">プロフィール画像</label>
         <div class="image_group">
           <img
-            :src="previewUrl"
+            :src="userStore.imageUrl"
             class="rounded-circle border image_select"
             alt="プロフィール画像"
           />
@@ -65,7 +57,7 @@ async function editProfile() {
           class="form-control"
           id="exampleFormControlInput1"
           placeholder="user name"
-          v-model="userName"
+          v-model="userStore.userName"
         />
       </div>
       <div class="profile_edit_item">
@@ -75,7 +67,7 @@ async function editProfile() {
           class="form-control"
           id="exampleFormControlInput1"
           placeholder="comment"
-          v-model="comment"
+          v-model="userStore.userComment"
         ></textarea>
       </div>
       <div class="btn_group">
