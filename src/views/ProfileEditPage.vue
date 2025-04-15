@@ -1,4 +1,47 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import editUserProfile from "@/api/user/userProfileEdit";
+import getUserProfile from "@/api/user/userProfileGet";
+import { onMounted, ref } from "vue";
+
+const selectedFile = ref<File | null>(null);
+const previewUrl = ref<string>("/src/assets/images/no_image.png");
+const userName = ref<string>("");
+const comment = ref<string>("");
+
+onMounted(async () => {
+  const responseData = await getUserProfile();
+  previewUrl.value = responseData.url;
+  userName.value = responseData.name;
+  comment.value = responseData.comment;
+});
+
+// ファイル選択処理
+function onFileChange(event: Event) {
+  const target = event.target as HTMLInputElement;
+  const file = target.files?.[0];
+  if (file) {
+    selectedFile.value = file;
+    // ローカルの画像パス生成
+    previewUrl.value = URL.createObjectURL(file);
+  }
+}
+// 編集保存処理
+async function editProfile() {
+  const formData = new FormData();
+  formData.append("userName", userName.value);
+  formData.append("comment", comment.value);
+  if (selectedFile.value) {
+    formData.append("userImage", selectedFile.value);
+  }
+  // 編集保存api
+  await editUserProfile(formData);
+  // プロフィール情報取得api
+  const responseData = await getUserProfile();
+  previewUrl.value = responseData.url;
+  userName.value = responseData.name;
+  comment.value = responseData.comment;
+}
+</script>
 
 <template>
   <div class="container box_container">
@@ -6,7 +49,14 @@
       <h3 class="profile_edit_title">プロフィール編集</h3>
       <div class="profile_edit_item">
         <label for="formFile" class="form-label">プロフィール画像</label>
-        <input class="form-control" type="file" id="formFile" />
+        <div class="image_group">
+          <img
+            :src="previewUrl"
+            class="rounded-circle border image_select"
+            alt="プロフィール画像"
+          />
+          <input class="form-control" type="file" id="formFile" @change="onFileChange" />
+        </div>
       </div>
       <div class="profile_edit_item">
         <label for="exampleFormControlInput1" class="form-label">ユーザーネーム</label>
@@ -15,13 +65,28 @@
           class="form-control"
           id="exampleFormControlInput1"
           placeholder="user name"
+          v-model="userName"
         />
       </div>
-      <div class="btn_container">
-        <button type="button" class="btn btn-primary profile_page_btn">更新する</button>
-        <router-link to="/" class="btn btn-info profile_page_btn">
-          トップに戻る
-        </router-link>
+      <div class="profile_edit_item">
+        <label for="exampleFormControlInput1" class="form-label">自己紹介</label>
+        <textarea
+          type="text"
+          class="form-control"
+          id="exampleFormControlInput1"
+          placeholder="comment"
+          v-model="comment"
+        ></textarea>
+      </div>
+      <div class="btn_group">
+        <button
+          type="button"
+          class="btn btn-primary profile_page_btn"
+          @click="editProfile"
+        >
+          更新する
+        </button>
+        <router-link to="/" class="btn btn-info back_top_btn"> トップに戻る </router-link>
       </div>
     </div>
   </div>
@@ -44,23 +109,40 @@
 }
 
 .profile_edit_item {
-  margin-bottom: 25px;
+  margin-bottom: 45px;
+  font-size: 1.1rem;
 }
 
-.btn_container {
+.btn_group {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: space-around;
   margin-top: 30px;
 }
 
 .profile_page_btn {
   width: 30%;
-  margin-bottom: 20px;
+}
+
+.back_top_btn {
+  width: 35%;
 }
 
 .form-control::placeholder {
   color: rgb(33 37 41 / 41%);
   opacity: 1;
+}
+
+.image_group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image_select {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  margin-bottom: 15px;
 }
 </style>
