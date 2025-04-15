@@ -1,4 +1,24 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import resetPassword from "@/api/auth/passwordReset";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+const email = ref<string>("");
+const old_password = ref<string>("");
+const new_password = ref<string>("");
+const new_password_confirmation = ref<string>("");
+
+async function reset() {
+  await resetPassword({
+    email: email.value,
+    old_password: old_password.value,
+    new_password: new_password.value,
+    new_password_confirmation: new_password_confirmation.value,
+  });
+  router.push("/login");
+}
+</script>
 
 <template>
   <div class="container box_container">
@@ -11,28 +31,45 @@
           class="form-control"
           id="e_mail"
           placeholder="test@example.com"
+          v-model="email"
         />
       </div>
       <div class="profile_edit_item">
-        <label for="new_password" class="form-label">パスワード</label>
+        <label for="old_password" class="form-label">旧パスワード</label>
+        <input
+          type="password"
+          id="old_password"
+          class="form-control"
+          aria-labelledby="passwordHelpBlock"
+          v-model="old_password"
+        />
+      </div>
+      <div class="profile_edit_item">
+        <label for="new_password" class="form-label">新パスワード</label>
         <input
           type="password"
           id="new_password"
           class="form-control"
           aria-labelledby="passwordHelpBlock"
+          v-model="new_password"
         />
       </div>
       <div class="profile_edit_item">
-        <label for="confirm_password" class="form-label">パスワード確認</label>
+        <label for="confirm_password" class="form-label">新パスワード確認</label>
         <input
           type="password"
           id="confirm_password"
           class="form-control"
           aria-labelledby="passwordHelpBlock"
+          v-model="new_password_confirmation"
         />
       </div>
       <div class="btn_container">
-        <button type="button" class="btn btn-primary password_reset_page_btn">
+        <button
+          type="button"
+          class="btn btn-primary password_reset_page_btn"
+          @click="reset"
+        >
           パスワードリセット
         </button>
         <router-link to="/login" class="btn btn-info password_reset_page_btn">
