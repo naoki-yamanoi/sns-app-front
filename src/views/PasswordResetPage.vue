@@ -5,28 +5,28 @@
     <div class="proflie_edit_container">
       <h3 class="profile_edit_title">パスワードリセット</h3>
       <div class="profile_edit_item">
-        <label for="exampleFormControlInput1" class="form-label">メールアドレス</label>
+        <label for="e_mail" class="form-label">メールアドレス</label>
         <input
           type="email"
           class="form-control"
-          id="exampleFormControlInput1"
+          id="e_mail"
           placeholder="test@example.com"
         />
       </div>
       <div class="profile_edit_item">
-        <label for="inputPassword5" class="form-label">パスワード</label>
+        <label for="new_password" class="form-label">パスワード</label>
         <input
           type="password"
-          id="inputPassword5"
+          id="new_password"
           class="form-control"
           aria-labelledby="passwordHelpBlock"
         />
       </div>
       <div class="profile_edit_item">
-        <label for="inputPassword5" class="form-label">パスワード確認</label>
+        <label for="confirm_password" class="form-label">パスワード確認</label>
         <input
           type="password"
-          id="inputPassword5"
+          id="confirm_password"
           class="form-control"
           aria-labelledby="passwordHelpBlock"
         />
@@ -71,7 +71,7 @@
 }
 
 .password_reset_page_btn {
-  width: 35%;
+  width: 180px;
   margin-bottom: 20px;
 }
 

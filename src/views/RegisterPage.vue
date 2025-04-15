@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import postLogin from "@/api/auth/loginPost";
+import registerUser from "@/api/user/userRegister";
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 
+const name = ref<string>("");
 const email = ref<string>("");
 const password = ref<string>("");
 const success = ref<string>("");
@@ -18,17 +19,16 @@ const errorMessage = computed(() => {
   return error.value;
 });
 
-// ログイン処理
-async function login() {
+// 新規登録処理
+async function register() {
   try {
-    const responseData = await postLogin({
+    const responseData = await registerUser({
+      name: name.value,
       email: email.value,
       password: password.value,
     });
     success.value = responseData.message;
-    // ローカルストレージに帰ってきたAPIトークン保存
-    localStorage.setItem("token", responseData.token);
-    router.push("/");
+    router.push("/login");
   } catch (e) {
     error.value = e.response.data.message;
   }
@@ -38,12 +38,22 @@ async function login() {
 <template>
   <div class="container box_container">
     <div class="proflie_edit_container">
-      <h3 class="profile_edit_title">ログイン</h3>
+      <h3 class="profile_edit_title">新規登録</h3>
       <div v-if="success" class="alert alert-success" role="alert">
         {{ successMessage }}
       </div>
       <div v-if="error" class="alert alert-danger" role="alert">
         {{ errorMessage }}
+      </div>
+      <div class="profile_edit_item">
+        <label for="user_name" class="form-label">ユーザー名</label>
+        <input
+          type="text"
+          class="form-control"
+          id="user_name"
+          placeholder="ユーザー名"
+          v-model="name"
+        />
       </div>
       <div class="profile_edit_item">
         <label for="e_mail" class="form-label">メールアドレス</label>
@@ -56,24 +66,21 @@ async function login() {
         />
       </div>
       <div class="profile_edit_item">
-        <label for="password" class="form-label">パスワード</label>
+        <label for="user_password" class="form-label">パスワード</label>
         <input
           type="password"
-          id="password"
+          id="user_password"
           class="form-control"
           aria-labelledby="passwordHelpBlock"
           v-model="password"
         />
       </div>
       <div class="btn_container">
-        <button type="button" class="btn btn-primary login_page_btn" @click="login">
-          ログイン
+        <button type="button" class="btn btn-primary login_page_btn" @click="register">
+          新規登録
         </button>
-        <router-link to="/register" class="btn btn-info login_page_btn">
-          新規登録へ
-        </router-link>
-        <router-link to="/password/reset" class="btn btn-info login_page_btn">
-          パスワードリセットへ
+        <router-link to="/login" class="btn btn-info login_page_btn">
+          ログインに戻る
         </router-link>
       </div>
     </div>
@@ -108,7 +115,7 @@ async function login() {
 }
 
 .login_page_btn {
-  width: 190px;
+  width: 150px;
   margin-bottom: 20px;
 }
 

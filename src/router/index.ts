@@ -4,6 +4,7 @@ import LoginPage from "@/views/LoginPage.vue";
 import ProfileEditPage from "@/views/ProfileEditPage.vue";
 import AccountEditPage from "@/views/AccountEditPage.vue";
 import PasswordResetPage from "@/views/PasswordResetPage.vue";
+import RegisterPage from "@/views/RegisterPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,6 +18,11 @@ const router = createRouter({
       path: "/login",
       name: "login",
       component: LoginPage,
+    },
+    {
+      path: "/register",
+      name: "register",
+      component: RegisterPage,
     },
     {
       path: "/password/reset",
@@ -39,8 +45,13 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("token");
 
-  // ログイン画面以外に遷移時、APIトークンがなければログイン画面にリダイレクト
-  if (to.name !== "login" && !token) {
+  // ログイン、新規登録、パスワードリセット画面以外に遷移時、APIトークンがなければログイン画面にリダイレクト
+  if (
+    to.name !== "login" &&
+    to.name !== "register" &&
+    to.name !== "passwordReset" &&
+    !token
+  ) {
     next({ name: "login" });
   }
 
