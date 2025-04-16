@@ -20,6 +20,8 @@ async function doSearch() {
   postStore.keywordPosts = await postsKeywordGet({
     keyword: keyword.value,
   });
+  // searchタブをactiveにする
+  postStore.doSearchFlg = true;
   // 検索キーワードはストアに保存する（データ再取得に使うため）
   postStore.searchedKeyword = keyword.value;
 }

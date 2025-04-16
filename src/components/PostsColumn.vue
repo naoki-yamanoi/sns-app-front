@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { onMounted, ref, watch } from "vue";
 import postsFollowGet from "@/api/post/postsFollowGet";
 import postsLikeGet from "@/api/post/postsLikeGet";
 import postsMineGet from "@/api/post/postsMineGet";
@@ -10,6 +10,7 @@ import KeywordPostItem from "@/components/KeywordPostItem.vue";
 import { usePostStore } from "@/stores/postStore";
 
 const postStore = usePostStore();
+const searchTab = ref<HTMLButtonElement | null>(null);
 
 onMounted(async () => {
   // my posts取得
@@ -19,6 +20,16 @@ onMounted(async () => {
   // favorites取得
   postStore.likePosts = await postsLikeGet();
 });
+// キーワード検索されたらsearchタブをactiveにする
+watch(
+  () => postStore.doSearchFlg,
+  (newVal) => {
+    if (newVal) {
+      searchTab.value?.click();
+      postStore.doSearchFlg = false;
+    }
+  }
+);
 </script>
 
 <template>
@@ -76,6 +87,7 @@ onMounted(async () => {
           role="tab"
           aria-controls="search"
           aria-selected="false"
+          ref="searchTab"
         >
           search
         </button>

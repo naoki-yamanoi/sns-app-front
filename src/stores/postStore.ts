@@ -18,9 +18,11 @@ export const usePostStore = defineStore("post", () => {
   const likePosts = ref<LikePost[]>([]);
   const keywordPosts = ref<KeywordPost[]>([]);
   const searchedKeyword = ref<string>("");
+  const doSearchFlg = ref<boolean>(false);
 
   const userStore = useUserStore();
 
+  // フォロー切り替え処理
   async function toggleFollowBtn(followFlg: boolean, userId: number) {
     if (followFlg) {
       // フォロー外すapi
@@ -45,6 +47,7 @@ export const usePostStore = defineStore("post", () => {
     }
   }
 
+  // いいね切り替え処理
   async function toggleLikeBtn(likeFlg: boolean, postId: number) {
     if (likeFlg) {
       // いいね外すapi
@@ -75,6 +78,7 @@ export const usePostStore = defineStore("post", () => {
     likePosts,
     keywordPosts,
     searchedKeyword,
+    doSearchFlg,
     toggleFollowBtn,
     toggleLikeBtn,
   };
