@@ -45,8 +45,14 @@ async function doSearch() {
     </div>
     <div class="recommend_group">
       <label class="recommend_group_title">おすすめユーザー</label>
-      <div v-for="recommendUser in userStore.recommendUsers" :key="recommendUser.id">
-        <RecommendUserItem :recommend-user="recommendUser" />
+      <div class="recommend_container">
+        <div
+          v-for="recommendUser in userStore.recommendUsers"
+          :key="recommendUser.id"
+          class="card_container"
+        >
+          <RecommendUserItem :recommend-user="recommendUser" />
+        </div>
       </div>
     </div>
   </div>
@@ -55,11 +61,13 @@ async function doSearch() {
 <style scoped lang="scss">
 .right_container {
   width: 25%;
+  height: 100%;
   border: 1px solid rgb(225, 224, 224);
   box-shadow: 0px 0px 4px #e6e3e3;
 }
 
 .search_group {
+  height: 28%;
   padding: 20px 10px 40px 10px;
   border-bottom: 1px solid #c7c6c6;
 
@@ -70,6 +78,7 @@ async function doSearch() {
 }
 
 .recommend_group {
+  height: 64%;
   padding: 20px 10px 0 10px;
 
   &_title {
@@ -80,5 +89,14 @@ async function doSearch() {
   .card {
     margin-bottom: 5px;
   }
+}
+
+.recommend_container {
+  height: 98%;
+}
+
+.card_container {
+  height: 33%;
+  margin-bottom: 5px;
 }
 </style>

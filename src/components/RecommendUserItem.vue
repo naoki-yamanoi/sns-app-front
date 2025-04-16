@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import { usePostStore } from "@/stores/postStore";
 import type { RecommendUser } from "@/types/user";
 
@@ -6,6 +7,12 @@ const props = defineProps<{
   recommendUser: RecommendUser;
 }>();
 const postStore = usePostStore();
+
+const userComment = computed(() => {
+  return props.recommendUser.comment.length > 15
+    ? props.recommendUser.comment.slice(0, 15) + "..."
+    : props.recommendUser.comment;
+});
 
 // フォロー切り替え処理
 async function toggleFollow() {
@@ -27,7 +34,7 @@ async function toggleFollow() {
       </div>
     </div>
     <div class="card-body">
-      <p class="card-text">{{ props.recommendUser.comment }}</p>
+      <p class="card-text">{{ userComment }}</p>
     </div>
   </div>
 </template>
