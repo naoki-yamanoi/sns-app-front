@@ -26,12 +26,12 @@ onMounted(async () => {
       <li class="nav-item nav_item_tab" role="presentation">
         <button
           class="nav-link nav_item_link"
-          id="home-tab"
+          id="my-posts-tab"
           data-bs-toggle="tab"
-          data-bs-target="#home"
+          data-bs-target="#my_posts"
           type="button"
           role="tab"
-          aria-controls="home"
+          aria-controls="my_posts"
           aria-selected="false"
         >
           my posts
@@ -40,12 +40,12 @@ onMounted(async () => {
       <li class="nav-item nav_item_tab" role="presentation">
         <button
           class="nav-link nav_item_link active"
-          id="profile-tab"
+          id="follows-tab"
           data-bs-toggle="tab"
-          data-bs-target="#profile"
+          data-bs-target="#follows"
           type="button"
           role="tab"
-          aria-controls="profile"
+          aria-controls="follows"
           aria-selected="true"
         >
           follows
@@ -54,21 +54,40 @@ onMounted(async () => {
       <li class="nav-item nav_item_tab" role="presentation">
         <button
           class="nav-link nav_item_link"
-          id="contact-tab"
+          id="favorites-tab"
           data-bs-toggle="tab"
-          data-bs-target="#contact"
+          data-bs-target="#favorites"
           type="button"
           role="tab"
-          aria-controls="contact"
+          aria-controls="favorites"
           aria-selected="false"
         >
           favorites
         </button>
       </li>
+      <li class="nav-item nav_item_tab" role="presentation">
+        <button
+          class="nav-link nav_item_link"
+          id="search-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#search"
+          type="button"
+          role="tab"
+          aria-controls="search"
+          aria-selected="false"
+        >
+          search
+        </button>
+      </li>
     </ul>
     <div class="tab-content" id="myTabContent">
       <!-- my posts -->
-      <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+      <div
+        class="tab-pane fade"
+        id="my_posts"
+        role="tabpanel"
+        aria-labelledby="my-posts-tab"
+      >
         <div class="card" v-for="myPost in postStore.myPosts" :key="myPost.id">
           <MyPostItem :my-post="myPost" />
         </div>
@@ -76,9 +95,9 @@ onMounted(async () => {
       <!-- follows -->
       <div
         class="tab-pane fade show active"
-        id="profile"
+        id="follows"
         role="tabpanel"
-        aria-labelledby="profile-tab"
+        aria-labelledby="follows-tab"
       >
         <div
           class="card"
@@ -91,13 +110,17 @@ onMounted(async () => {
       <!-- favorites -->
       <div
         class="tab-pane fade"
-        id="contact"
+        id="favorites"
         role="tabpanel"
-        aria-labelledby="contact-tab"
+        aria-labelledby="favorites-tab"
       >
         <div class="card" v-for="likePost in postStore.likePosts" :key="likePost.id">
           <LikePostItem :like-post="likePost" />
         </div>
+      </div>
+      <!-- search -->
+      <div class="tab-pane fade" id="search" role="tabpanel" aria-labelledby="search-tab">
+          ああああ
       </div>
     </div>
   </div>
@@ -112,7 +135,7 @@ onMounted(async () => {
 }
 
 .nav_item_tab {
-  flex-basis: 33.3333%;
+  flex-basis: 25%;
 }
 
 .nav_item_link {
