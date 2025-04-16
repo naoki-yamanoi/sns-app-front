@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import IndexPage from "@/views/IndexPage.vue";
 import LoginPage from "@/views/LoginPage.vue";
 import ProfileEditPage from "@/views/ProfileEditPage.vue";
-import AccountEditPage from "@/views/AccountEditPage.vue";
 import PasswordResetPage from "@/views/PasswordResetPage.vue";
 import RegisterPage from "@/views/RegisterPage.vue";
 
@@ -33,11 +32,6 @@ const router = createRouter({
       path: "/profile/edit",
       name: "profileEdit",
       component: ProfileEditPage,
-    },
-    {
-      path: "/account/edit",
-      name: "accountEdit",
-      component: AccountEditPage,
     },
   ],
 });

@@ -60,9 +60,6 @@ async function logout() {
         <router-link to="/profile/edit" class="btn btn-info edit_profile_btn">
           プロフィール編集
         </router-link>
-        <router-link to="/account/edit" class="btn btn-success edit_profile_btn">
-          アカウント設定
-        </router-link>
       </div>
     </div>
     <div>
