@@ -78,7 +78,7 @@ async function editProfile() {
         >
           更新する
         </button>
-        <router-link to="/" class="btn btn-info back_top_btn"> トップに戻る </router-link>
+        <router-link to="/" class="btn btn-secondary back_top_btn"> トップに戻る </router-link>
       </div>
     </div>
   </div>

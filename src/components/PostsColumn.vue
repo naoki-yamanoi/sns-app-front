@@ -151,6 +151,11 @@ watch(
   border: 1px solid rgb(225, 224, 224);
   box-shadow: 0px 0px 4px #e6e3e3;
   overflow-y: auto;
+  background-color: $bg_color;
+}
+
+.nav-link {
+  color: #1e66d0;
 }
 
 .nav_item_tab {

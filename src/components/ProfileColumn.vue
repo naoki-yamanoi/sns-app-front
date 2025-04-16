@@ -57,7 +57,7 @@ async function logout() {
           投稿する
         </button>
         <p>{{ messageStore.message }}</p>
-        <router-link to="/profile/edit" class="btn btn-info edit_profile_btn">
+        <router-link to="/profile/edit" class="btn btn-secondary edit_profile_btn">
           プロフィール編集
         </router-link>
       </div>
@@ -80,6 +80,7 @@ async function logout() {
   flex-direction: column;
   justify-content: space-between;
   padding: 20px;
+  background-color: $bg_color;
 }
 
 .top_container {
