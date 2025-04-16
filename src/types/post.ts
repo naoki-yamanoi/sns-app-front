@@ -29,3 +29,14 @@ export interface MyPost {
   likeFlg: boolean;
   createdAt: string;
 }
+
+export interface KeywordPost {
+  id: number;
+  userId: number;
+  userName: string;
+  content: string;
+  userImage: string;
+  followFlg: boolean;
+  likeFlg: boolean;
+  createdAt: string;
+}

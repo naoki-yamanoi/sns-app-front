@@ -6,6 +6,7 @@ import postsMineGet from "@/api/post/postsMineGet";
 import FollowPostItem from "@/components/FollowPostItem.vue";
 import LikePostItem from "@/components/LikePostItem.vue";
 import MyPostItem from "@/components/MyPostItem.vue";
+import KeywordPostItem from "@/components/KeywordPostItem.vue";
 import { usePostStore } from "@/stores/postStore";
 
 const postStore = usePostStore();
@@ -120,7 +121,13 @@ onMounted(async () => {
       </div>
       <!-- search -->
       <div class="tab-pane fade" id="search" role="tabpanel" aria-labelledby="search-tab">
-          ああああ
+        <div
+          class="card"
+          v-for="keywordPost in postStore.keywordPosts"
+          :key="keywordPost.id"
+        >
+          <KeywordPostItem :keyword-post="keywordPost" />
+        </div>
       </div>
     </div>
   </div>

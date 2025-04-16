@@ -1,38 +1,45 @@
 <script setup lang="ts">
+import { onMounted, ref } from "vue";
 import getRecommendUsers from "@/api/user/usersReccomendGet";
-import { onMounted } from "vue";
+import postsKeywordGet from "@/api/post/postsKeywordGet";
 import RecommendUserItem from "@/components/RecommendUserItem.vue";
 import { useUserStore } from "@/stores/userStore";
+import { usePostStore } from "@/stores/postStore";
+
+const userStore = useUserStore();
+const postStore = usePostStore();
+const keyword = ref<string>("");
 
 onMounted(async () => {
   // おすすめユーザー取得
   userStore.recommendUsers = await getRecommendUsers();
 });
-const userStore = useUserStore();
 
-function doKeywordSearch() {
-  console.log("www");
+// キーワード検索処理
+async function doSearch() {
+  postStore.keywordPosts = await postsKeywordGet({
+    keyword: keyword.value,
+  });
+  // 検索キーワードはストアに保存する（データ再取得に使うため）
+  postStore.searchedKeyword = keyword.value;
 }
 </script>
 
 <template>
   <div class="right_container">
     <div class="search_group">
-      <form>
-        <div class="mb-3">
-          <label for="keyword_search" class="form-label search_group_title">検索</label>
-          <input
-            type="text"
-            class="form-control"
-            id="keyword_search"
-            aria-describedby="emailHelp"
-            placeholder="キーワード"
-          />
-        </div>
-        <button type="button" class="btn btn-success" @click="doKeywordSearch">
-          検索
-        </button>
-      </form>
+      <div class="mb-3">
+        <label for="keyword_search" class="form-label search_group_title">検索</label>
+        <input
+          type="text"
+          class="form-control"
+          id="keyword_search"
+          aria-describedby="emailHelp"
+          placeholder="キーワード"
+          v-model="keyword"
+        />
+      </div>
+      <button type="button" class="btn btn-success" @click="doSearch">検索</button>
     </div>
     <div class="recommend_group">
       <label class="recommend_group_title">おすすめユーザー</label>
