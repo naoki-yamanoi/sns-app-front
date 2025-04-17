@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import * as bootstrap from "bootstrap";
+import postLogout from "@/api/auth/logoutPost";
 import DoPostModal from "@/components/DoPostModal.vue";
 import SearchPostModal from "@/components/SearchPostModal.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 // 投稿モーダル開く
 function showDoPostModal() {
@@ -25,6 +29,13 @@ function hideSearchPostModal() {
     modal.hide();
   }
 }
+// ログアウト実行
+async function logout() {
+  await postLogout();
+  // ローカルストレージのAPIトークン削除
+  localStorage.removeItem("token");
+  router.push("/login");
+}
 </script>
 
 <template>
@@ -33,7 +44,7 @@ function hideSearchPostModal() {
       <router-link to="/profile/edit" class="navbar-brand">編集</router-link>
       <a class="navbar-brand" @click="showDoPostModal">投稿</a>
       <a class="navbar-brand" @click="showSearchPostModal">検索</a>
-      <a class="navbar-brand logout_tab">ログアウト</a>
+      <a class="navbar-brand logout_tab" @click="logout">ログアウト</a>
     </div>
   </nav>
 

@@ -116,4 +116,10 @@ async function login() {
   color: rgb(33 37 41 / 41%);
   opacity: 1;
 }
+
+@media (max-width: 768px) {
+  .box_container {
+    width: 90%;
+  }
+}
 </style>
