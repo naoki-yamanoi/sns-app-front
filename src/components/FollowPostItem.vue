@@ -1,11 +1,21 @@
 <script setup lang="ts">
 import { usePostStore } from "@/stores/postStore";
 import type { FollowPost } from "@/types/post";
+import { computed } from "vue";
 
 const props = defineProps<{
   followPost: FollowPost;
 }>();
 const postStore = usePostStore();
+
+const userName = computed(() => {
+  if (window.innerWidth <= 500) {
+    return props.followPost.userName.length > 7
+      ? props.followPost.userName.slice(0, 6) + "..."
+      : props.followPost.userName;
+  }
+  return props.followPost.userName;
+});
 
 // フォロー切り替え処理
 async function toggleFollow() {
@@ -22,7 +32,7 @@ async function toggleHeart() {
     <div class="card-header card_title_container">
       <div class="card_user_container">
         <img :src="followPost.userImage" class="post_user_image" />
-        <p>{{ followPost.userName }}</p>
+        <p>{{ userName }}</p>
       </div>
       <div class="card_right_container">
         <button type="button" class="btn btn-primary follow_btn" @click="toggleFollow">
@@ -123,5 +133,20 @@ async function toggleHeart() {
 
 .none_select {
   user-select: none;
+}
+
+@media (max-width: 500px) {
+  .card_title_container {
+    padding-right: 10px;
+    padding-left: 10px;
+
+    p {
+      margin-left: 5px;
+    }
+  }
+
+  .follow_btn {
+    margin-right: 10px;
+  }
 }
 </style>

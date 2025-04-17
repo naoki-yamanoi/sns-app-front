@@ -2,13 +2,22 @@
 import getUserId from "@/api/user/userGet";
 import { usePostStore } from "@/stores/postStore";
 import type { KeywordPost } from "@/types/post";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 const props = defineProps<{
   keywordPost: KeywordPost;
 }>();
 const postStore = usePostStore();
 const loginUserId = ref();
+
+const userName = computed(() => {
+  if (window.innerWidth <= 500) {
+    return props.keywordPost.userName.length > 7
+      ? props.keywordPost.userName.slice(0, 6) + "..."
+      : props.keywordPost.userName;
+  }
+  return props.keywordPost.userName;
+});
 
 onMounted(async () => {
   loginUserId.value = await getUserId();
@@ -29,7 +38,7 @@ async function toggleHeart() {
     <div class="card-header card_title_container">
       <div class="card_user_container">
         <img :src="keywordPost.userImage" class="post_user_image" />
-        <p>{{ keywordPost.userName }}</p>
+        <p>{{ userName }}</p>
       </div>
       <div class="card_right_container">
         <button
@@ -135,5 +144,20 @@ async function toggleHeart() {
 
 .none_select {
   user-select: none;
+}
+
+@media (max-width: 500px) {
+  .card_title_container {
+    padding-right: 10px;
+    padding-left: 10px;
+
+    p {
+      margin-left: 5px;
+    }
+  }
+
+  .follow_btn {
+    margin-right: 10px;
+  }
 }
 </style>
