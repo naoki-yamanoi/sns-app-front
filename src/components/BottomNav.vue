@@ -18,10 +18,10 @@ function hideDoPostModal() {
 <template>
   <nav class="navbar fixed-bottom bg-body-tertiary d-block d-md-none">
     <div class="container-fluid">
-      <a class="navbar-brand">編集</a>
+      <router-link to="/profile/edit" class="navbar-brand">編集</router-link>
       <a class="navbar-brand" @click="showDoPostModal">投稿</a>
       <a class="navbar-brand">検索</a>
-      <a class="navbar-brand">ログアウト</a>
+      <a class="navbar-brand logout_tab">ログアウト</a>
     </div>
   </nav>
 
@@ -57,5 +57,9 @@ function hideDoPostModal() {
   &:hover {
     background-color: #498ff6;
   }
+}
+
+.logout_tab {
+  padding: 12px 0;
 }
 </style>

@@ -139,4 +139,10 @@ async function editProfile() {
   object-fit: cover;
   margin-bottom: 15px;
 }
+
+@media (max-width: 768px) {
+  .box_container {
+    width: 90%;
+  }
+}
 </style>
