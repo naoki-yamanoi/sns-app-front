@@ -63,4 +63,10 @@ async function doPost() {
   border-style: none;
   outline: none;
 }
+
+@media (max-width: 768px) {
+  .modal-content {
+    margin-top: 150px;
+  }
+}
 </style>
