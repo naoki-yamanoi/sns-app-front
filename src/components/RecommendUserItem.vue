@@ -9,8 +9,8 @@ const props = defineProps<{
 const postStore = usePostStore();
 
 const userComment = computed(() => {
-  return props.recommendUser.comment.length > 15
-    ? props.recommendUser.comment.slice(0, 15) + "..."
+  return props.recommendUser.comment.length > 10
+    ? props.recommendUser.comment.slice(0, 10) + "..."
     : props.recommendUser.comment;
 });
 

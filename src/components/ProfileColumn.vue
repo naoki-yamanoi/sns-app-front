@@ -36,7 +36,7 @@ async function logout() {
 </script>
 
 <template>
-  <div class="left_container">
+  <div class="left_container d-none d-md-block">
     <div>
       <h2>SNS App</h2>
       <div class="top_container">
@@ -73,7 +73,7 @@ async function logout() {
 
 <style scoped lang="scss">
 .left_container {
-  width: 25%;
+  width: 23%;
   border: 1px solid rgb(225, 224, 224);
   box-shadow: 0px 0px 4px #e6e3e3;
   display: flex;

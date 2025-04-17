@@ -7,6 +7,7 @@ import FollowPostItem from "@/components/FollowPostItem.vue";
 import LikePostItem from "@/components/LikePostItem.vue";
 import MyPostItem from "@/components/MyPostItem.vue";
 import KeywordPostItem from "@/components/KeywordPostItem.vue";
+import BottomNav from "@/components/BottomNav.vue";
 import { usePostStore } from "@/stores/postStore";
 
 const postStore = usePostStore();
@@ -142,6 +143,7 @@ watch(
         </div>
       </div>
     </div>
+    <BottomNav />
   </div>
 </template>
 
@@ -165,5 +167,12 @@ watch(
 .nav_item_link {
   width: 100%;
   padding: 16px 16px;
+}
+
+@media (max-width: 768px) {
+  .center_container {
+    width: 100%;
+    margin-bottom: 55px;
+  }
 }
 </style>

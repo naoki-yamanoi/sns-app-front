@@ -28,7 +28,7 @@ async function doSearch() {
 </script>
 
 <template>
-  <div class="right_container">
+  <div class="right_container d-none d-md-block">
     <div class="search_group">
       <div class="mb-3">
         <label for="keyword_search" class="form-label search_group_title">検索</label>
@@ -60,7 +60,7 @@ async function doSearch() {
 
 <style scoped lang="scss">
 .right_container {
-  width: 25%;
+  width: 27%;
   height: 100%;
   border: 1px solid rgb(225, 224, 224);
   box-shadow: 0px 0px 4px #e6e3e3;
