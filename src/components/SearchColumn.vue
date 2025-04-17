@@ -28,7 +28,7 @@ async function doSearch() {
 </script>
 
 <template>
-  <div class="right_container d-none d-md-block">
+  <div class="right_container">
     <div class="search_group">
       <div class="mb-3">
         <label for="keyword_search" class="form-label search_group_title">検索</label>
@@ -99,5 +99,11 @@ async function doSearch() {
 .card_container {
   height: 33%;
   margin-bottom: 5px;
+}
+
+@media (max-width: 768px) {
+  .right_container {
+    display: none;
+  }
 }
 </style>
