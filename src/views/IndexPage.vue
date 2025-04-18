@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import PostsCard from "@/components/PostsCard.vue";
-import ProfileCard from "@/components/ProfileCard.vue";
-import TrendCard from "@/components/TrendCard.vue";
+import PostsColumn from "@/components/PostsColumn.vue";
+import ProfileColumn from "@/components/ProfileColumn.vue";
+import SearchColumn from "@/components/SearchColumn.vue";
 </script>
 
 <template>
   <div class="index_container">
-    <ProfileCard />
-    <PostsCard />
-    <TrendCard />
+    <ProfileColumn />
+    <PostsColumn />
+    <SearchColumn />
   </div>
 </template>
 

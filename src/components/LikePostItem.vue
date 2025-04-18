@@ -1,29 +1,35 @@
 <script setup lang="ts">
+import getUserId from "@/api/user/userGet";
 import { usePostStore } from "@/stores/postStore";
-import type { FollowPost } from "@/types/post";
-import { computed } from "vue";
+import type { LikePost } from "@/types/post";
+import { computed, onMounted, ref } from "vue";
 
 const props = defineProps<{
-  followPost: FollowPost;
+  likePost: LikePost;
 }>();
 const postStore = usePostStore();
+const loginUserId = ref();
 
 const userName = computed(() => {
   if (window.innerWidth <= 500) {
-    return props.followPost.userName.length > 7
-      ? props.followPost.userName.slice(0, 6) + "..."
-      : props.followPost.userName;
+    return props.likePost.userName.length > 7
+      ? props.likePost.userName.slice(0, 6) + "..."
+      : props.likePost.userName;
   }
-  return props.followPost.userName;
+  return props.likePost.userName;
+});
+
+onMounted(async () => {
+  loginUserId.value = await getUserId();
 });
 
 // フォロー切り替え処理
 async function toggleFollow() {
-  await postStore.toggleFollowBtn(props.followPost.followFlg, props.followPost.userId);
+  await postStore.toggleFollowBtn(props.likePost.followFlg, props.likePost.userId);
 }
 // いいね切り替え処理
 async function toggleHeart() {
-  await postStore.toggleLikeBtn(props.followPost.likeFlg, props.followPost.id);
+  await postStore.toggleLikeBtn(props.likePost.likeFlg, props.likePost.id);
 }
 </script>
 
@@ -31,17 +37,22 @@ async function toggleHeart() {
   <div>
     <div class="card-header card_title_container">
       <div class="card_user_container">
-        <img :src="followPost.userImage" class="post_user_image" />
+        <img :src="likePost.userImage" class="post_user_image" />
         <p>{{ userName }}</p>
       </div>
       <div class="card_right_container">
-        <button type="button" class="btn btn-primary follow_btn" @click="toggleFollow">
-          {{ followPost.followFlg ? "フォロー中" : "フォロー" }}
+        <button
+          v-if="loginUserId !== likePost.userId"
+          type="button"
+          class="btn btn-primary follow_btn"
+          @click="toggleFollow"
+        >
+          {{ props.likePost.followFlg ? "フォロー中" : "フォロー" }}
         </button>
         <label
           for="like"
           class="heart_input"
-          :class="{ heart_input_on: followPost.likeFlg }"
+          :class="{ heart_input_on: likePost.likeFlg }"
           @click="toggleHeart"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -50,11 +61,11 @@ async function toggleHeart() {
             />
           </svg>
         </label>
-        <p class="none_select">{{ followPost.createdAt }}</p>
+        <p class="none_select">{{ likePost.createdAt }}</p>
       </div>
     </div>
     <div class="card-body">
-      <p class="card-text">{{ followPost.content }}</p>
+      <p class="card-text">{{ likePost.content }}</p>
     </div>
   </div>
 </template>

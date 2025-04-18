@@ -1,16 +1,32 @@
 <script setup lang="ts">
 import * as bootstrap from "bootstrap";
 import DoPostModal from "@/components/DoPostModal.vue";
-import postLogout from "@/api/logoutPost";
+import postLogout from "@/api/auth/logoutPost";
 import { useRouter } from "vue-router";
+import { useMessageStore } from "@/stores/messageStore";
+import { onMounted } from "vue";
+import { useUserStore } from "@/stores/userStore";
 
 const router = useRouter();
+const messageStore = useMessageStore();
+const userStore = useUserStore();
 
+onMounted(async () => {
+  await userStore.getProfile();
+});
+
+// 投稿モーダル開く
 function showDoPostModal() {
-  // 投稿モーダル表示
   new bootstrap.Modal("#doPostModal").show();
 }
-
+// 投稿モーダル閉じる
+function hideDoPostModal() {
+  const modal = bootstrap.Modal.getInstance("#doPostModal");
+  if (modal) {
+    modal.hide();
+  }
+}
+// ログアウト実行
 async function logout() {
   await postLogout();
   // ローカルストレージのAPIトークン削除
@@ -26,13 +42,11 @@ async function logout() {
       <div class="top_container">
         <img
           class="profile_user_image"
-          src="/src/assets/images/44631706_p0_master1200.jpg"
-          alt=""
+          :src="userStore.imageUrl"
+          alt="プロフィール画像"
         />
-        <p class="profile_user_name">ユーザー１</p>
-        <p>
-          自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介
-        </p>
+        <p class="profile_user_name">{{ userStore.userName }}</p>
+        <p>{{ userStore.userComment }}</p>
         <button
           type="button"
           class="btn btn-primary post_btn"
@@ -42,11 +56,9 @@ async function logout() {
         >
           投稿する
         </button>
-        <router-link to="/profile/edit" class="btn btn-info edit_profile_btn">
+        <p>{{ messageStore.message }}</p>
+        <router-link to="/profile/edit" class="btn btn-secondary edit_profile_btn">
           プロフィール編集
-        </router-link>
-        <router-link to="/account/edit" class="btn btn-success edit_profile_btn">
-          アカウント設定
         </router-link>
       </div>
     </div>
@@ -56,18 +68,19 @@ async function logout() {
   </div>
 
   <!-- Modal -->
-  <DoPostModal />
+  <DoPostModal @hide-modal="hideDoPostModal" />
 </template>
 
 <style scoped lang="scss">
 .left_container {
-  width: 25%;
+  width: 23%;
   border: 1px solid rgb(225, 224, 224);
   box-shadow: 0px 0px 4px #e6e3e3;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 20px;
+  background-color: $bg_color;
 }
 
 .top_container {
@@ -98,5 +111,11 @@ async function logout() {
   width: 80%;
   padding: 12px 0;
   margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+  .left_container {
+    display: none;
+  }
 }
 </style>

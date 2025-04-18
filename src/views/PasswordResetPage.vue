@@ -1,38 +1,75 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import resetPassword from "@/api/auth/passwordReset";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+const email = ref<string>("");
+const old_password = ref<string>("");
+const new_password = ref<string>("");
+const new_password_confirmation = ref<string>("");
+
+async function reset() {
+  await resetPassword({
+    email: email.value,
+    old_password: old_password.value,
+    new_password: new_password.value,
+    new_password_confirmation: new_password_confirmation.value,
+  });
+  router.push("/login");
+}
+</script>
 
 <template>
   <div class="container box_container">
     <div class="proflie_edit_container">
       <h3 class="profile_edit_title">パスワードリセット</h3>
       <div class="profile_edit_item">
-        <label for="exampleFormControlInput1" class="form-label">メールアドレス</label>
+        <label for="e_mail" class="form-label">メールアドレス</label>
         <input
           type="email"
           class="form-control"
-          id="exampleFormControlInput1"
+          id="e_mail"
           placeholder="test@example.com"
+          v-model="email"
         />
       </div>
       <div class="profile_edit_item">
-        <label for="inputPassword5" class="form-label">パスワード</label>
+        <label for="old_password" class="form-label">旧パスワード</label>
         <input
           type="password"
-          id="inputPassword5"
+          id="old_password"
           class="form-control"
           aria-labelledby="passwordHelpBlock"
+          v-model="old_password"
         />
       </div>
       <div class="profile_edit_item">
-        <label for="inputPassword5" class="form-label">パスワード確認</label>
+        <label for="new_password" class="form-label">新パスワード</label>
         <input
           type="password"
-          id="inputPassword5"
+          id="new_password"
           class="form-control"
           aria-labelledby="passwordHelpBlock"
+          v-model="new_password"
+        />
+      </div>
+      <div class="profile_edit_item">
+        <label for="confirm_password" class="form-label">新パスワード確認</label>
+        <input
+          type="password"
+          id="confirm_password"
+          class="form-control"
+          aria-labelledby="passwordHelpBlock"
+          v-model="new_password_confirmation"
         />
       </div>
       <div class="btn_container">
-        <button type="button" class="btn btn-primary password_reset_page_btn">
+        <button
+          type="button"
+          class="btn btn-primary password_reset_page_btn"
+          @click="reset"
+        >
           パスワードリセット
         </button>
         <router-link to="/login" class="btn btn-info password_reset_page_btn">
@@ -71,12 +108,18 @@
 }
 
 .password_reset_page_btn {
-  width: 35%;
+  width: 180px;
   margin-bottom: 20px;
 }
 
 .form-control::placeholder {
   color: rgb(33 37 41 / 41%);
   opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .box_container {
+    width: 90%;
+  }
 }
 </style>

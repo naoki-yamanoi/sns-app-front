@@ -1,29 +1,15 @@
 <script setup lang="ts">
 import { usePostStore } from "@/stores/postStore";
-import type { FollowPost } from "@/types/post";
-import { computed } from "vue";
+import type { MyPost } from "@/types/post";
 
 const props = defineProps<{
-  followPost: FollowPost;
+  myPost: MyPost;
 }>();
 const postStore = usePostStore();
 
-const userName = computed(() => {
-  if (window.innerWidth <= 500) {
-    return props.followPost.userName.length > 7
-      ? props.followPost.userName.slice(0, 6) + "..."
-      : props.followPost.userName;
-  }
-  return props.followPost.userName;
-});
-
-// フォロー切り替え処理
-async function toggleFollow() {
-  await postStore.toggleFollowBtn(props.followPost.followFlg, props.followPost.userId);
-}
 // いいね切り替え処理
 async function toggleHeart() {
-  await postStore.toggleLikeBtn(props.followPost.likeFlg, props.followPost.id);
+  await postStore.toggleLikeBtn(props.myPost.likeFlg, props.myPost.id);
 }
 </script>
 
@@ -31,17 +17,14 @@ async function toggleHeart() {
   <div>
     <div class="card-header card_title_container">
       <div class="card_user_container">
-        <img :src="followPost.userImage" class="post_user_image" />
-        <p>{{ userName }}</p>
+        <img :src="myPost.userImage" class="post_user_image" />
+        <p>{{ myPost.userName }}</p>
       </div>
       <div class="card_right_container">
-        <button type="button" class="btn btn-primary follow_btn" @click="toggleFollow">
-          {{ followPost.followFlg ? "フォロー中" : "フォロー" }}
-        </button>
         <label
           for="like"
           class="heart_input"
-          :class="{ heart_input_on: followPost.likeFlg }"
+          :class="{ heart_input_on: myPost.likeFlg }"
           @click="toggleHeart"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -50,11 +33,11 @@ async function toggleHeart() {
             />
           </svg>
         </label>
-        <p class="none_select">{{ followPost.createdAt }}</p>
+        <p class="none_select">{{ myPost.createdAt }}</p>
       </div>
     </div>
     <div class="card-body">
-      <p class="card-text">{{ followPost.content }}</p>
+      <p class="card-text">{{ myPost.content }}</p>
     </div>
   </div>
 </template>
@@ -85,12 +68,6 @@ async function toggleHeart() {
     display: flex;
     align-items: center;
   }
-}
-
-.follow_btn {
-  font-size: 13px;
-  padding: 5px 10px;
-  margin-right: 22px;
 }
 
 .heart_input {
@@ -133,20 +110,5 @@ async function toggleHeart() {
 
 .none_select {
   user-select: none;
-}
-
-@media (max-width: 500px) {
-  .card_title_container {
-    padding-right: 10px;
-    padding-left: 10px;
-
-    p {
-      margin-left: 5px;
-    }
-  }
-
-  .follow_btn {
-    margin-right: 10px;
-  }
 }
 </style>

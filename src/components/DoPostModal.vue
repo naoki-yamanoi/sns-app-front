@@ -1,6 +1,26 @@
 <script setup lang="ts">
-function doPost() {
-  console.log("doPostします");
+import createPost from "@/api/post/postCreate";
+import postsMineGet from "@/api/post/postsMineGet";
+import { useMessageStore } from "@/stores/messageStore";
+import { usePostStore } from "@/stores/postStore";
+import { ref } from "vue";
+
+const postStore = usePostStore();
+const messageStore = useMessageStore();
+const emit = defineEmits(["hideModal"]);
+const postContent = ref<string>("");
+
+async function doPost() {
+  // 新規投稿作成
+  const responseData = await createPost({
+    post: postContent.value,
+  });
+  // モーダル閉じる
+  emit("hideModal");
+  // レスポンスメッセージ表示
+  messageStore.setMessage(responseData.message);
+  // 新規投稿追加後のmy posts再取得
+  postStore.myPosts = await postsMineGet();
 }
 </script>
 
@@ -23,16 +43,30 @@ function doPost() {
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body">
-          あああああいいいいいいいいいうううううううえええええええおおおおお
-        </div>
+        <textarea
+          class="modal-body post_message_container"
+          v-model="postContent"
+        ></textarea>
         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" @click="doPost">投稿する</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             閉じる
           </button>
-          <button type="button" class="btn btn-primary" @click="doPost">投稿する</button>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped lang="scss">
+.post_message_container {
+  border-style: none;
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  .modal-content {
+    margin-top: 150px;
+  }
+}
+</style>
