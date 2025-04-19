@@ -30,7 +30,11 @@ async function login() {
     localStorage.setItem("token", responseData.token);
     router.push("/");
   } catch (e) {
-    error.value = e.response.data.message;
+    if (e instanceof Error) {
+      error.value = e.message;
+    } else {
+      error.value = "想定外のエラーが発生しました。";
+    }
   }
 }
 </script>

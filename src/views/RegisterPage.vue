@@ -30,7 +30,11 @@ async function register() {
     success.value = responseData.message;
     router.push("/login");
   } catch (e) {
-    error.value = e.response.data.message;
+    if (e instanceof Error) {
+      error.value = e.message;
+    } else {
+      error.value = "想定外のエラーが発生しました。";
+    }
   }
 }
 </script>
