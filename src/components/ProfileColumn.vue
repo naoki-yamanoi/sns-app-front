@@ -80,7 +80,7 @@ async function logout() {
   flex-direction: column;
   justify-content: space-between;
   padding: 20px;
-  background-color: $bg_color;
+  background-color: #e3e3e347;
 }
 
 .top_container {

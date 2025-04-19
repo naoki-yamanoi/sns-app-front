@@ -64,7 +64,7 @@ async function doSearch() {
   height: 100%;
   border: 1px solid rgb(225, 224, 224);
   box-shadow: 0px 0px 4px #e6e3e3;
-  background-color: $bg_color;
+  background-color: #e3e3e347;
 }
 
 .search_group {
