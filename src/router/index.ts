@@ -33,6 +33,10 @@ const router = createRouter({
       name: "profileEdit",
       component: ProfileEditPage,
     },
+    {
+      path: "/:pathMatch(.*)*",
+      redirect: "/",
+    },
   ],
 });
 
