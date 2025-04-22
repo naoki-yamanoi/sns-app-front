@@ -33,10 +33,6 @@ const router = createRouter({
       name: "profileEdit",
       component: ProfileEditPage,
     },
-    {
-      path: "/:pathMatch(.*)*",
-      redirect: "/",
-    },
   ],
 });
 
@@ -48,7 +44,7 @@ router.beforeEach((to, from, next) => {
     to.name !== "login" &&
     to.name !== "register" &&
     to.name !== "passwordReset" &&
-    !token
+    (token === "undefined" || !token)
   ) {
     next({ name: "login" });
   }
