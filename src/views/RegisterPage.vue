@@ -68,10 +68,10 @@ async function register() {
         />
       </div>
       <div class="btn_container">
-        <button type="button" class="btn btn-primary login_page_btn" @click="register">
+        <button type="button" class="btn btn-success login_page_btn" @click="register">
           新規登録
         </button>
-        <router-link to="/login" class="btn btn-info login_page_btn">
+        <router-link to="/login" class="btn btn-secondary login_page_btn">
           ログインに戻る
         </router-link>
       </div>

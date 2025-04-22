@@ -60,7 +60,7 @@ async function login() {
         <button type="button" class="btn btn-primary login_page_btn" @click="login">
           ログイン
         </button>
-        <router-link to="/register" class="btn btn-info login_page_btn">
+        <router-link to="/register" class="btn btn-success login_page_btn">
           新規登録へ
         </router-link>
         <router-link to="/password/reset" class="btn btn-info login_page_btn">
