@@ -4,12 +4,13 @@ import DoPostModal from "@/components/DoPostModal.vue";
 import postLogout from "@/api/auth/logoutPost";
 import { useRouter } from "vue-router";
 import { useMessageStore } from "@/stores/messageStore";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useUserStore } from "@/stores/userStore";
 
 const router = useRouter();
 const messageStore = useMessageStore();
 const userStore = useUserStore();
+const errors = ref<string>("");
 
 onMounted(async () => {
   await userStore.getProfile();
@@ -28,7 +29,16 @@ function hideDoPostModal() {
 }
 // ログアウト実行
 async function logout() {
-  await postLogout();
+  const responseData = await postLogout();
+
+  if (responseData.errors) {
+    errors.value = responseData.message;
+    setTimeout(() => {
+      errors.value = "";
+    }, 2000);
+    return;
+  }
+
   // ローカルストレージのAPIトークン削除
   localStorage.removeItem("token");
   router.push("/login");
@@ -63,6 +73,9 @@ async function logout() {
       </div>
     </div>
     <div>
+      <div v-if="errors" class="alert alert-danger error_msg" role="alert">
+        {{ errors }}
+      </div>
       <button class="btn btn-danger" @click="logout">ログアウト</button>
     </div>
   </div>
@@ -111,6 +124,10 @@ async function logout() {
   width: 80%;
   padding: 12px 0;
   margin-bottom: 30px;
+}
+
+.error_msg {
+  font-size: 0.8rem;
 }
 
 @media (max-width: 768px) {
