@@ -8,14 +8,24 @@ const email = ref<string>("");
 const old_password = ref<string>("");
 const new_password = ref<string>("");
 const new_password_confirmation = ref<string>("");
+const errors = ref<string>("");
 
 async function reset() {
-  await resetPassword({
+  const responseData = await resetPassword({
     email: email.value,
     old_password: old_password.value,
     new_password: new_password.value,
     new_password_confirmation: new_password_confirmation.value,
   });
+
+  if (responseData.errors) {
+    errors.value = responseData.message;
+    setTimeout(() => {
+      errors.value = "";
+    }, 2000);
+    return;
+  }
+
   router.push("/login");
 }
 </script>
@@ -24,6 +34,9 @@ async function reset() {
   <div class="container box_container">
     <div class="proflie_edit_container">
       <h3 class="profile_edit_title">パスワードリセット</h3>
+      <div v-if="errors" class="alert alert-danger" role="alert">
+        {{ errors }}
+      </div>
       <div class="profile_edit_item">
         <label for="e_mail" class="form-label">メールアドレス</label>
         <input
