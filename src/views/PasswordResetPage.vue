@@ -78,11 +78,7 @@ async function reset() {
         />
       </div>
       <div class="btn_container">
-        <button
-          type="button"
-          class="btn btn-info password_reset_page_btn"
-          @click="reset"
-        >
+        <button type="button" class="btn btn-info password_reset_page_btn" @click="reset">
           パスワードリセット
         </button>
         <router-link to="/login" class="btn btn-secondary password_reset_page_btn">
