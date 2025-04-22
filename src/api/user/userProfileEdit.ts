@@ -1,4 +1,5 @@
 import apiClient from "@/api/axios";
+import axios from "axios";
 
 async function editUserProfile(formData: FormData) {
   try {
@@ -9,7 +10,10 @@ async function editUserProfile(formData: FormData) {
     });
     return response.data;
   } catch (error) {
-    console.error("データ取得中にエラーが発生しました:", error);
+    if (axios.isAxiosError(error)) {
+      return error.response?.data;
+    }
+    return "予期せぬエラーです。";
   }
 }
 
