@@ -3,12 +3,10 @@ import * as bootstrap from "bootstrap";
 import DoPostModal from "@/components/DoPostModal.vue";
 import postLogout from "@/api/auth/logoutPost";
 import { useRouter } from "vue-router";
-import { useMessageStore } from "@/stores/messageStore";
 import { onMounted, ref } from "vue";
 import { useUserStore } from "@/stores/userStore";
 
 const router = useRouter();
-const messageStore = useMessageStore();
 const userStore = useUserStore();
 const errors = ref<string>("");
 
@@ -66,7 +64,6 @@ async function logout() {
         >
           投稿する
         </button>
-        <p>{{ messageStore.message }}</p>
         <router-link to="/profile/edit" class="btn btn-secondary edit_profile_btn">
           プロフィール編集
         </router-link>
