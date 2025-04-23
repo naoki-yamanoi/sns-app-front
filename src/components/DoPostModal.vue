@@ -15,6 +15,8 @@ async function doPost() {
   });
   // モーダル閉じる
   emit("hideModal");
+  // 空にする
+  postContent.value = "";
   // 新規投稿追加後のmy posts再取得
   postStore.myPosts = await postsMineGet();
 }
