@@ -1,4 +1,5 @@
 import apiClient from "@/api/axios";
+import axios from "axios";
 
 interface RegisterUserRequest {
   name: string;
@@ -11,7 +12,10 @@ async function registerUser(payload: RegisterUserRequest) {
     const response = await apiClient.post("/register", payload);
     return response.data;
   } catch (error) {
-    console.error("データ取得中にエラーが発生しました:", error);
+    if (axios.isAxiosError(error)) {
+      return error.response?.data;
+    }
+    return "予期せぬエラーです。";
   }
 }
 

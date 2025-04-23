@@ -1,4 +1,5 @@
 import apiClient from "@/api/axios";
+import axios from "axios";
 
 interface LoginRequest {
   email: string;
@@ -6,8 +7,15 @@ interface LoginRequest {
 }
 
 async function postLogin(payload: LoginRequest) {
-  const response = await apiClient.post("/login", payload);
-  return response.data;
+  try {
+    const response = await apiClient.post("/login", payload);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response?.data;
+    }
+    return "予期せぬエラーです。";
+  }
 }
 
 export default postLogin;

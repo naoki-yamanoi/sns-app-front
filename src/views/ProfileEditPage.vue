@@ -5,6 +5,8 @@ import { onMounted, ref } from "vue";
 
 const userStore = useUserStore();
 const selectedFile = ref<File | null>(null);
+const success = ref<string>("");
+const errors = ref<string>("");
 
 onMounted(async () => {
   await userStore.getProfile();
@@ -29,7 +31,20 @@ async function editProfile() {
     formData.append("userImage", selectedFile.value);
   }
   // 編集保存api
-  await editUserProfile(formData);
+  const responseData = await editUserProfile(formData);
+
+  if (responseData.errors) {
+    errors.value = responseData.message;
+    setTimeout(() => {
+      errors.value = "";
+    }, 2000);
+    return;
+  }
+
+  success.value = responseData.message;
+  setTimeout(() => {
+    success.value = "";
+  }, 2000);
   // プロフィール情報取得api
   await userStore.getProfile();
 }
@@ -39,6 +54,12 @@ async function editProfile() {
   <div class="container box_container">
     <div class="proflie_edit_container">
       <h3 class="profile_edit_title">プロフィール編集</h3>
+      <div v-if="success" class="alert alert-success" role="alert">
+        {{ success }}
+      </div>
+      <div v-if="errors" class="alert alert-danger" role="alert">
+        {{ errors }}
+      </div>
       <div class="profile_edit_item">
         <label for="formFile" class="form-label">プロフィール画像</label>
         <div class="image_group">

@@ -1,24 +1,20 @@
 <script setup lang="ts">
 import createPost from "@/api/post/postCreate";
 import postsMineGet from "@/api/post/postsMineGet";
-import { useMessageStore } from "@/stores/messageStore";
 import { usePostStore } from "@/stores/postStore";
 import { ref } from "vue";
 
 const postStore = usePostStore();
-const messageStore = useMessageStore();
 const emit = defineEmits(["hideModal"]);
 const postContent = ref<string>("");
 
 async function doPost() {
   // 新規投稿作成
-  const responseData = await createPost({
+  await createPost({
     post: postContent.value,
   });
   // モーダル閉じる
   emit("hideModal");
-  // レスポンスメッセージ表示
-  messageStore.setMessage(responseData.message);
   // 新規投稿追加後のmy posts再取得
   postStore.myPosts = await postsMineGet();
 }

@@ -1,40 +1,30 @@
 <script setup lang="ts">
 import postLogin from "@/api/auth/loginPost";
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 
 const email = ref<string>("");
 const password = ref<string>("");
-const success = ref<string>("");
-const error = ref<string>("");
-
-const successMessage = computed(() => {
-  return success.value;
-});
-
-const errorMessage = computed(() => {
-  return error.value;
-});
+const errors = ref<string>("");
 
 // ログイン処理
 async function login() {
-  try {
-    const responseData = await postLogin({
-      email: email.value,
-      password: password.value,
-    });
-    success.value = responseData.message;
-    // ローカルストレージに帰ってきたAPIトークン保存
+  const responseData = await postLogin({
+    email: email.value,
+    password: password.value,
+  });
+
+  if (responseData.token) {
+    // 成功ならローカルストレージに帰ってきたAPIトークン保存
     localStorage.setItem("token", responseData.token);
     router.push("/");
-  } catch (e) {
-    if (e instanceof Error) {
-      error.value = e.message;
-    } else {
-      error.value = "想定外のエラーが発生しました。";
-    }
+  } else {
+    errors.value = responseData.message;
+    setTimeout(() => {
+      errors.value = "";
+    }, 2000);
   }
 }
 </script>
@@ -43,11 +33,8 @@ async function login() {
   <div class="container box_container">
     <div class="proflie_edit_container">
       <h3 class="profile_edit_title">ログイン</h3>
-      <div v-if="success" class="alert alert-success" role="alert">
-        {{ successMessage }}
-      </div>
-      <div v-if="error" class="alert alert-danger" role="alert">
-        {{ errorMessage }}
+      <div v-if="errors" class="alert alert-danger" role="alert">
+        {{ errors }}
       </div>
       <div class="profile_edit_item">
         <label for="e_mail" class="form-label">メールアドレス</label>
@@ -73,7 +60,7 @@ async function login() {
         <button type="button" class="btn btn-primary login_page_btn" @click="login">
           ログイン
         </button>
-        <router-link to="/register" class="btn btn-info login_page_btn">
+        <router-link to="/register" class="btn btn-success login_page_btn">
           新規登録へ
         </router-link>
         <router-link to="/password/reset" class="btn btn-info login_page_btn">

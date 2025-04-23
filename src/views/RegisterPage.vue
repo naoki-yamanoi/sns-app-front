@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import registerUser from "@/api/user/userRegister";
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -8,34 +8,25 @@ const router = useRouter();
 const name = ref<string>("");
 const email = ref<string>("");
 const password = ref<string>("");
-const success = ref<string>("");
-const error = ref<string>("");
-
-const successMessage = computed(() => {
-  return success.value;
-});
-
-const errorMessage = computed(() => {
-  return error.value;
-});
+const errors = ref<string>("");
 
 // 新規登録処理
 async function register() {
-  try {
-    const responseData = await registerUser({
-      name: name.value,
-      email: email.value,
-      password: password.value,
-    });
-    success.value = responseData.message;
-    router.push("/login");
-  } catch (e) {
-    if (e instanceof Error) {
-      error.value = e.message;
-    } else {
-      error.value = "想定外のエラーが発生しました。";
-    }
+  const responseData = await registerUser({
+    name: name.value,
+    email: email.value,
+    password: password.value,
+  });
+
+  if (responseData.errors) {
+    errors.value = responseData.message;
+    setTimeout(() => {
+      errors.value = "";
+    }, 2000);
+    return;
   }
+
+  router.push("/login");
 }
 </script>
 
@@ -43,11 +34,8 @@ async function register() {
   <div class="container box_container">
     <div class="proflie_edit_container">
       <h3 class="profile_edit_title">新規登録</h3>
-      <div v-if="success" class="alert alert-success" role="alert">
-        {{ successMessage }}
-      </div>
-      <div v-if="error" class="alert alert-danger" role="alert">
-        {{ errorMessage }}
+      <div v-if="errors" class="alert alert-danger" role="alert">
+        {{ errors }}
       </div>
       <div class="profile_edit_item">
         <label for="user_name" class="form-label">ユーザー名</label>
@@ -80,10 +68,10 @@ async function register() {
         />
       </div>
       <div class="btn_container">
-        <button type="button" class="btn btn-primary login_page_btn" @click="register">
+        <button type="button" class="btn btn-success login_page_btn" @click="register">
           新規登録
         </button>
-        <router-link to="/login" class="btn btn-info login_page_btn">
+        <router-link to="/login" class="btn btn-secondary login_page_btn">
           ログインに戻る
         </router-link>
       </div>
