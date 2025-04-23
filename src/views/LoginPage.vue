@@ -37,7 +37,9 @@ async function login() {
         {{ errors }}
       </div>
       <div class="profile_edit_item">
-        <label for="e_mail" class="form-label">メールアドレス（テスト用：aaa@example.com）</label>
+        <label for="e_mail" class="form-label">
+          メールアドレス（テスト用：aaa@example.com）
+        </label>
         <input
           type="email"
           class="form-control"
